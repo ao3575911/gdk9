@@ -1,0 +1,10 @@
+# declare idempotent symbols
+idempotent: X,Y
+
+# default phases
+default_phase: X=0,Y=0,Z=1
+
+# rewrite rules
+XY -> Z
+XZ -> Y1
+Z1 -> X0 priority=0
