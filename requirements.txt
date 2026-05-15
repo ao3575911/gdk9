@@ -1,1 +1,6 @@
 numpy
+sympy
+networkx
+matplotlib
+scikit-learn
+pandas
