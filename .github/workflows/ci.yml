@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install core dependencies
+        run: pip install numpy
+      - name: Syntax check
+        run: python -m py_compile gdk9_core_engine.py gdk9_framework.py gdk9_framework_extended.py symbolic_cipher.py main.py
+      - name: Smoke test
+        run: python main.py FWEM
