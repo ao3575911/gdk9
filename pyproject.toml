@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "gdk9-alphabet"
+version = "0.1.0"
+description = "GDk9 hollow-vector character embedding framework — string vectorisation and directed character graph"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Adam Grange", email = "ao3575911@gmail.com" }]
+requires-python = ">=3.11"
+dependencies = []
+
+[project.urls]
+Homepage   = "https://github.com/ao3575911/gdk9-alphabet"
+Repository = "https://github.com/ao3575911/gdk9-alphabet"
+Issues     = "https://github.com/ao3575911/gdk9-alphabet/issues"
