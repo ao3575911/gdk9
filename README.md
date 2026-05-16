@@ -23,6 +23,8 @@ Every GDk9 word is a conserved transformation—a symbolic circuit that remains 
 
 ## CLI — output examples
 
+![GDk9 v0.3.0 demo](docs/img/gdk9_demo.gif)
+
 **`gdk9 --color dcg classify FWEM`** — symmetry class, SymPhi energy, and 4D vector for each letter:
 
 ![DCG classify FWEM](docs/img/dcg_classify.png)
