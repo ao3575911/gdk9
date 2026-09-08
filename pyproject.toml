@@ -28,8 +28,10 @@ classifiers = [
 
 [project.scripts]
 gdk9 = "gdk9.cli:main"
+gdk9-saturate = "gdk9.saturate:main"
 
 [project.optional-dependencies]
+egglog = ["egglog>=13.0.0"]
 dev = ["pytest", "ruff", "black", "pyflakes"]
 
 [tool.setuptools]
