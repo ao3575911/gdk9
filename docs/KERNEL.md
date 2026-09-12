@@ -23,3 +23,10 @@ compatibility. Kernel code must not import `gdk9.cli`, `gdk9.state`,
 
 Adapters can wrap the kernel later, but the implication semantics should remain
 testable without filesystem state or process-global configuration.
+
+## Smoke adapter
+
+`gdk9.kernel_cli` (and the `gdk9 kernel eval|apply|search` CLI group) adapt a
+`Principle` into `KernelPrinciple` and print JSON. The adapter is deliberately
+outside `gdk9/kernel/` so the pure kernel boundary stays intact.
+
