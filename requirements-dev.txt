@@ -1,8 +1,2 @@
-pytest>=7.0
-pytest-cov
-black
-isort
-flake8
-mypy
-pre-commit
-# developer tooling; pin versions if you want exact reproducibility
+# Prefer the package extra (keeps pins in pyproject.toml):
+#   pip install -e ".[dev]"

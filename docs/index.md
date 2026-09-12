@@ -105,7 +105,7 @@ plugins/                   ← Distributable plugin packs (YAML/JSON)
 └── ninefold_extended.json ← Extended Ninefold Grid with Unicode symbols
 
 tests/                     ← pytest suite
-examples/                  ← Runnable example scripts (01_analyze.py … 07_api.py)
+examples/                  ← Runnable example scripts (01_analyze.py … 09_kernel_search_walkthrough.py; includes 08_kernel.py)
 pairs.csv                  ← Character pair table (visual, DC/AC, energy, symbol)
 ```
 

@@ -220,7 +220,7 @@ gdk9 state merge -i peer.json --dry-run  # preview without writing
 ```bash
 gdk9 crypto encrypt "message" -k KEY         # EDPC (playful, energy-path cipher)
 gdk9 crypto decrypt "ciphertext" -k KEY
-gdk9 crypto encrypt "message" -k KEY -m secure  # AES-GCM (requires cryptography pkg)
+gdk9 crypto encrypt "message" -k KEY -m secure  # Fernet + PBKDF2-HMAC-SHA256 (200k); needs cryptography
 gdk9 crypto decrypt "ciphertext" -k KEY -m secure
 ```
 
