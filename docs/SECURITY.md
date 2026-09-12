@@ -66,17 +66,20 @@ The **Energy-Derived Path Cipher** is a **playful, non-cryptographic** cipher de
 
 ### Secure (`--mode secure`)
 
-Uses **AES-256-GCM** via the `cryptography` package. Provides:
-- 256-bit symmetric encryption.
-- Authenticated encryption (tampering is detected).
-- Random 96-bit nonce per encryption.
+Uses **Fernet** (`cryptography.fernet.Fernet`) via the optional `cryptography` package — not AES-256-GCM directly. Fernet provides authenticated encryption (AES-128-CBC + HMAC-SHA256 under the hood) with a timestamped token.
+
+**Payload format** (then outer urlsafe-base64):
+- Magic prefix: `G9F` (3 bytes)
+- Salt: 16 random bytes
+- Fernet token: output of `Fernet.encrypt(...)`
+
+**Key derivation:** PBKDF2-HMAC-SHA256 over the passphrase with the per-message salt, **200_000** iterations, `dklen=32`, then urlsafe-base64-encoded to form the Fernet key. See `gdk9/crypto.py`.
 
 ```bash
-pip install cryptography
+pip install "gdk9-cli[secure]"
+# or: pip install cryptography
 gdk9 crypto encrypt "secret message" -k "my-passphrase" --mode secure
 ```
-
-**Passphrase handling:** The passphrase is currently used as raw bytes (zero-padded to 32 bytes). For production use, replace with a proper KDF (e.g., Argon2, PBKDF2) before the AES call. See `gdk9/crypto.py` for the implementation.
 
 **Note:** GDk9 crypto is experimental. For high-stakes encryption, use a dedicated tool (age, GPG, libsodium).
 

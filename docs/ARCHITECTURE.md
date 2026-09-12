@@ -90,7 +90,7 @@ Single entry point. Parses args, loads principle, auto-boots plugins, dispatches
 
 ### Crypto (`crypto.py`)
 - EDPC: playful energy-path cipher — XOR keyed by DCG-derived byte stream.
-- Secure: AES-256-GCM via the `cryptography` package.
+- Secure: Fernet (`cryptography`) with PBKDF2-HMAC-SHA256 key derivation; payload `G9F` + salt + Fernet token (urlsafe-b64).
 
 ### Kernel (`kernel/`)
 Pure implication kernel — no CLI, no state files, no plugins, no TUI, no crypto.
