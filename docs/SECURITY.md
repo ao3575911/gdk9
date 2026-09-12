@@ -57,11 +57,14 @@ GDk9 ships two cipher modes:
 
 ### EDPC (default, `--mode edpc`)
 
-The **Energy-Derived Path Cipher** is a **playful, non-cryptographic** cipher designed for GDk9 demonstrations and symbolic experiments. It derives a byte stream from the DCG energy path of the key and XORs the plaintext.
+The **Energy-Derived Path Cipher** is a **playful, non-cryptographic** transform for demos.
+It builds a keystream from each key character's `char_energy` (digital-root style) and
+**rotates** letters/digits/known symbols in the plaintext (Caesar-style). It does **not**
+XOR bytes and does **not** use the DCG path.
 
 **Do not use EDPC for real secrets.** It provides no semantic security:
-- Key stream is deterministic and short-cycling.
-- No authenticated encryption — ciphertext integrity is not guaranteed.
+- Keystream is deterministic and short-cycling.
+- No authenticated encryption — integrity is not guaranteed.
 - Susceptible to known-plaintext and ciphertext-only attacks.
 
 ### Secure (`--mode secure`)
