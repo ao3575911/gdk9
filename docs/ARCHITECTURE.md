@@ -89,7 +89,7 @@ Single entry point. Parses args, loads principle, auto-boots plugins, dispatches
 - `apply_plugin` — merges symbol_energy into active principle; seeds symbols/rules into state.
 
 ### Crypto (`crypto.py`)
-- EDPC: playful energy-path cipher — XOR keyed by DCG-derived byte stream.
+- EDPC: playful non-crypto transform — rotates via `char_energy` keystream (not XOR, not DCG).
 - Secure: Fernet (`cryptography`) with PBKDF2-HMAC-SHA256 key derivation; payload `G9F` + salt + Fernet token (urlsafe-b64).
 
 ### Kernel (`kernel/`)
