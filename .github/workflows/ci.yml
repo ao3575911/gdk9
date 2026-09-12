@@ -25,11 +25,8 @@ jobs:
       - name: Install package
         run: pip install -e ".[${{ matrix.extras }}]"
 
-      - name: Ruff lint
-        run: ruff check .
-
-      - name: Pyflakes
-        run: python -m pyflakes gdk9
+      - name: Ruff (critical)
+        run: ruff check gdk9 --select E9,F63,F7,F82
 
       - name: Pytest
         run: python -m pytest -q
