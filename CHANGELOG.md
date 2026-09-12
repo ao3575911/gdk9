@@ -7,6 +7,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### License
+- Align root `LICENSE` file to **AGPL-3.0-or-later** (was GPL-3 text; matches pyproject/CLI/docs).
+
+
 ### Package
 - Add `[project.optional-dependencies].build` (`build`) and include `build` in the
   `dev` extra so `pip install '.[build]'` / `'.[dev]'` yields a reproducible sdist/wheel path.
