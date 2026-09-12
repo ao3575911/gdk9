@@ -260,20 +260,43 @@ print(vis)
 
 ## Kernel API (pure, no I/O)
 
-```python
-from gdk9.kernel.principle import KernelPrinciple
-from gdk9.kernel.symbol import Symbol
-from gdk9.kernel.expression import Expression
-from gdk9.kernel.rule import KernelRule
-from gdk9.kernel.engine import Engine
-from gdk9.kernel.proof import Proof
+The kernel is in-memory only. Adapters (`gdk9.kernel_cli`, `gdk9 kernel …`) may
+wrap it; `gdk9.kernel.*` itself must not import CLI, state, plugins, crypto, TUI,
+or terminal formatting helpers.
 
-kp   = KernelPrinciple.from_principle(principle)
-sym  = Symbol("ALPHA", energy=5.0)
-expr = Expression([sym])
+```python
+from gdk9.kernel import (
+  Expression,
+  ImplicationEngine,
+  ImplicationRule,
+  Judgment,
+  KernelPrinciple,
+  ProofStep,
+  RuleKind,
+  Symbol,
+)
+from gdk9.kernel.engine import fusion_rule, split_rule
+
+kp = KernelPrinciple.default()          # or adapt a Principle via kernel_cli
+expr = Expression.from_text("AB", kp)   # or Expression.from_names(["A", "B"], kp)
+engine = ImplicationEngine(kp, (fusion_rule(),))
+
+total, root = engine.evaluate(expr)     # → (3.0, 3)
+judgment = engine.apply("fuse", expr)   # Judgment with conservation check
+path = engine.infer(expr, Expression((Symbol("AB", total),)), max_depth=2)
 ```
 
-The kernel is designed for in-memory theorem proving and implication search without filesystem or CLI coupling. See `docs/KERNEL.md` for the full kernel reference.
+### CLI smoke path (adapter)
+
+```bash
+gdk9 kernel eval ABC
+gdk9 kernel apply fuse A B
+gdk9 kernel apply split AB --parts A,B --energies 1,2
+gdk9 kernel search A B --target AB --max-depth 2 --rules fuse
+```
+
+JSON output is emitted by `gdk9.kernel_cli` (outside `gdk9.kernel`). See
+`docs/KERNEL.md` and `examples/08_kernel.py`.
 
 ---
 

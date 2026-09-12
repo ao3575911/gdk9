@@ -18,6 +18,7 @@ from .ansi import supports_color, colorize
 from .fmt import Box, section, kv, fmt_dr, fmt_float_e, fmt_class, fmt_valid, fmt_form, energy_bar, vlen
 from .state import load_state, save_state, list_symbols, set_symbol, merge_state, set_rule
 from .imply import make_fusion, make_split, apply_rule, Rule
+from .kernel_cli import run_kernel
 from . import __version__
 from .plugins.loader import (
   list_available as plugins_list_available,
@@ -512,6 +513,32 @@ def build_parser() -> argparse.ArgumentParser:
   imp_ap.add_argument("inputs", nargs="+")
   imp_ap.add_argument("--commit", action="store_true", help="Persist outputs into state symbols")
 
+  ker = sub.add_parser(
+    "kernel",
+    aliases=["kn"],
+    help="Pure kernel smoke path: eval / apply / search (no state I/O)",
+  )
+  ker_sub = ker.add_subparsers(dest="kernel_cmd", required=True)
+  ker_eval = ker_sub.add_parser("eval", aliases=["ev"], help="Evaluate text under KernelPrinciple")
+  ker_eval.add_argument("text", help="Input text (each character becomes a symbol)")
+  ker_ap = ker_sub.add_parser("apply", aliases=["ap"], help="Apply a builtin fuse/split rule")
+  ker_ap.add_argument("rule", help="Builtin rule name: fuse | split")
+  ker_ap.add_argument("symbols", nargs="+", help="Ordered symbol names to transform")
+  ker_ap.add_argument("--parts", help="Comma-separated split output names (split only)")
+  ker_ap.add_argument("--energies", help="Comma-separated split output energies (split only)")
+  ker_se = ker_sub.add_parser("search", aliases=["find"], help="Bounded implication search (engine.infer)")
+  ker_se.add_argument("source", nargs="+", help="Source symbol names")
+  ker_se.add_argument("--target", nargs="+", required=True, help="Target symbol names")
+  ker_se.add_argument("--max-depth", type=int, default=4, help="Maximum implication depth")
+  ker_se.add_argument(
+    "--rules",
+    nargs="+",
+    default=["fuse"],
+    help="Builtin rules to enable (default: fuse)",
+  )
+  ker_se.add_argument("--parts", help="Comma-separated split output names when using split")
+  ker_se.add_argument("--energies", help="Comma-separated split output energies when using split")
+
   repl = sub.add_parser("repl", aliases=["sh"], help="Interactive REPL for symbols and imply")
 
   # plugin management
@@ -995,6 +1022,8 @@ def main(argv: list[str] | None = None) -> int:
       if args.symbol_cmd == "list":
         print(json.dumps({"symbols": list_symbols(load_state(state_path))}, indent=2))
         return 0
+    if args.cmd == "kernel":
+      return run_kernel(args, principle)
     if args.cmd == "imply":
       state = load_state(state_path)
       rules = state.setdefault("rules", {})
