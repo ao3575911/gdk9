@@ -30,3 +30,27 @@ testable without filesystem state or process-global configuration.
 `Principle` into `KernelPrinciple` and print JSON. The adapter is deliberately
 outside `gdk9/kernel/` so the pure kernel boundary stays intact.
 
+
+## Research walkthrough (handbook demos)
+
+Three CLI beats that stay inside the conservation law:
+
+```bash
+gdk9 kernel eval ABC
+# total 6.0, digital_root 6  (A=1,B=2,C=3)
+
+gdk9 kernel apply fuse A B
+# before energy 3 → after AB=3, conserved true, delta 0
+
+gdk9 kernel search A B --target AB --max-depth 2 --rules fuse
+# found true — one ProofStep: fuse A,B → AB
+```
+
+Deliberate miss (research honesty):
+
+```bash
+# library: infer toward an energy-mismatched target → found false
+python examples/09_kernel_search_walkthrough.py
+```
+
+CI on `main` is the prove gate for changes to this surface — see `docs/PROVE.md`.

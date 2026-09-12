@@ -26,7 +26,7 @@ rules, and best practices.
 - Global flags: `-P/--principle` (file), `-S/--state` (state.json), `-d/--debug`, `-C/--color`, `-N/--no-color`.
 - Core commands: `an|analyze`, `prof|profile`, `asg|assign`, `att|attune`, `cmp|compare`,
   `enc|encode`, `dec|decode`, `sig|synthesize`, `tok|tokenize`, `prin|principles`, `opt|optimize`,
-  `ui|tui`, `sym|symbol`, `im|imply`, `pl|plugin`, `sh|repl`.
+  `ui|tui`, `sym|symbol`, `im|imply`, `pl|plugin`, `sh|repl`, `kernel|kn`.
 - Help: `gdk9 help`, `gdk9 help plugin`, `gdk9 handbook` to print this guide.
 
 ## 4. Plugins
@@ -57,7 +57,40 @@ Plugins convert Gdk9 from a fixed engine into a modular platform.
 - Manage: `gdk9 sym add NAME ENERGY`, `gdk9 sym ls`.
 - List rules: `gdk9 im ls`.
 
-## 8. Troubleshooting
+
+## 8. Pure kernel — search walkthrough
+
+The implication kernel is the quiet centre of GDk9: no state file, no plugins, no
+home directory. It weighs symbols, applies conserving rules, and searches for a
+proof within a depth bound. Use it when you want the *judgment*, not the ceremony.
+
+CLI (JSON out):
+
+```bash
+gdk9 kernel eval ABC
+gdk9 kernel apply fuse A B
+gdk9 kernel search A B --target AB --max-depth 2 --rules fuse
+gdk9 kernel apply split AB --parts A,B --energies 1,2
+```
+
+What you should feel in the numbers (default principle):
+
+| Step | Command idea | Conserved fact |
+|------|----------------|----------------|
+| Weigh | `eval ABC` | A=1, B=2, C=3 → total 6, digital root 6 |
+| Fuse | `apply fuse A B` | before 3 → after `AB`=3, delta 0 |
+| Search | `search A B → AB` | finds a one-step fuse proof (`found: true`) |
+| Split | `split AB → A,B` | energies 1+2=3; delta 0 |
+
+Bounded search is deliberate: raise `--max-depth` only when you must. If the
+target energy cannot be reached, the tool returns `found: false` — that miss is
+part of the science.
+
+Runnable narrative: `python examples/09_kernel_search_walkthrough.py`.
+Library smoke: `python examples/08_kernel.py`. Boundary notes: `docs/KERNEL.md`.
+Prove gate: `docs/PROVE.md`.
+
+## 9. Troubleshooting
 - Invalid principle: `gdk9 prin validate --file my.json`.
 - Plugin errors: `gdk9 pl validate <pack>` to get detailed schema/energy check failures.
 - Set `-d` to enable debug logs.
@@ -126,4 +159,3 @@ Gdk9 — платформа «символической энергии». Он�
 - Принцип: `gdk9 prin validate --file my.json`.
 - Плагин: `gdk9 pl validate <pack>` — подробные ошибки схемы/энергии.
 - `-d` — детальные логи.
-

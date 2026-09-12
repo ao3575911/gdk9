@@ -95,6 +95,21 @@ gdk9 cmp -L file_a.txt -R file_b.txt
 
 ---
 
+
+### kernel / kn
+Pure implication kernel — no state file, JSON only.
+```bash
+gdk9 kernel eval ABC
+gdk9 kernel apply fuse A B
+gdk9 kernel apply split AB --parts A,B --energies 1,2
+gdk9 kernel search A B --target AB --max-depth 2 --rules fuse
+gdk9 kn eval "Hello"                 # alias
+```
+**Facts (default principle):** `eval ABC` → total 6 / DR 6; fuse A,B → AB energy 3 conserved; search finds the fuse proof within depth 2; impossible targets return `found: false`.
+
+Walkthrough: `docs/HANDBOOK.md` §8 · `examples/09_kernel_search_walkthrough.py` · prove gate: `docs/PROVE.md`
+
+---
 ### encode / enc
 ```bash
 gdk9 enc "Hi" -s annotate            # H[8]i[9]

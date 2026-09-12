@@ -25,3 +25,8 @@ These guidelines capture principles for extending Gdk9 while preserving core gua
 Notes:
 - Plugin registry is scaffolded in `gdk9/plugins/registry.py` for experimentation. Backward-compatible integration into CLI will come later.
 - Keep changes minimal and focused; match existing patterns and coding style.
+
+## Prove gate
+
+Green CI on `main` is required before treating a research change as done.
+See `docs/PROVE.md`. Prefer critical ruff + pytest locally before opening a PR.
