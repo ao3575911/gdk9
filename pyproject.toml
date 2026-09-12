@@ -32,7 +32,8 @@ gdk9-saturate = "gdk9.saturate:main"
 
 [project.optional-dependencies]
 egglog = ["egglog>=13.0.0"]
-dev = ["pytest", "ruff", "black", "pyflakes"]
+dev = ["pytest", "ruff", "black", "pyflakes", "build"]
+build = ["build"]
 secure = ["cryptography>=42.0.0"]
 
 [tool.setuptools]
