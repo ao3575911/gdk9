@@ -20,7 +20,8 @@ docs/
 ├── CONFIGURATION.md       ← Principle files, state, env vars, auto-boot
 ├── API.md                 ← Public Python API for library embedding
 ├── SECURITY.md            ← Threat model, crypto guidance, secret handling
-└── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
+├── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
+└── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
 ```
 
 ---
@@ -37,6 +38,7 @@ docs/
 | Use GDk9 as a Python library            | [API.md](API.md)               |
 | Understand the implication kernel       | [KERNEL.md](KERNEL.md)         |
 | Contribute or extend the codebase       | [DEVELOPER_GUIDELINES.md](DEVELOPER_GUIDELINES.md) |
+| Pin DCG letter-class / energy / vector  | [DCG_CONTRACT.md](DCG_CONTRACT.md) |
 | Review security considerations          | [SECURITY.md](SECURITY.md)     |
 
 ---

@@ -1,0 +1,535 @@
+{
+  "contract": "gdk9.dcg letter-class / SymPhi energy / 4D vector golden numeric contract",
+  "source_module": "gdk9.dcg",
+  "source_file": "gdk9/dcg.py",
+  "api": [
+    "symmetry_class",
+    "sym_energy",
+    "vectorize",
+    "word_sym_energy",
+    "word_vector"
+  ],
+  "notes": "Values are produced by the live public API in gdk9/dcg.py. word_sym_energy and word_vector skip non-alphabetic characters (spaces are ignored). Classification uses the uppercase form. Energy model (dcg.py module docstring): idempotent E=pos, biphasic E=sin(pos), involutive E=1/pos, asymmetric E=pos+1. vectorize = [pos, type_id, sqrt(|E|), sin(pos*pi/26)]. type_id: idempotent=1, biphasic=2, involutive=3, asymmetric=4.",
+  "words": [
+    {
+      "word": "FWEM",
+      "word_sym_energy": 42.04107572533686,
+      "word_vector": [
+        47.0,
+        8.0,
+        12.026380899298962,
+        2.585792292014487
+      ],
+      "letters": [
+        {
+          "char": "F",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 7.0,
+          "vectorize": [
+            6.0,
+            4.0,
+            2.6457513110645907,
+            0.6631226582407952
+          ]
+        },
+        {
+          "char": "W",
+          "symmetry_class": "idempotent",
+          "sym_energy": 23.0,
+          "vectorize": [
+            23.0,
+            1.0,
+            4.795831523312719,
+            0.35460488704253584
+          ]
+        },
+        {
+          "char": "E",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9589242746631385,
+          "vectorize": [
+            5.0,
+            2.0,
+            0.979246789457662,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "M",
+          "symmetry_class": "idempotent",
+          "sym_energy": 13.0,
+          "vectorize": [
+            13.0,
+            1.0,
+            3.605551275463989,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "word": "Hello",
+      "word_sym_energy": 48.04107572533686,
+      "word_vector": [
+        52.0,
+        12.0,
+        14.891759811339249,
+        4.3474081782469725
+      ],
+      "letters": [
+        {
+          "char": "H",
+          "symmetry_class": "idempotent",
+          "sym_energy": 8.0,
+          "vectorize": [
+            8.0,
+            1.0,
+            2.8284271247461903,
+            0.8229838658936564
+          ]
+        },
+        {
+          "char": "e",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9589242746631385,
+          "vectorize": [
+            5.0,
+            2.0,
+            0.979246789457662,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "l",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 13.0,
+          "vectorize": [
+            12.0,
+            4.0,
+            3.605551275463989,
+            0.992708874098054
+          ]
+        },
+        {
+          "char": "l",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 13.0,
+          "vectorize": [
+            12.0,
+            4.0,
+            3.605551275463989,
+            0.992708874098054
+          ]
+        },
+        {
+          "char": "o",
+          "symmetry_class": "idempotent",
+          "sym_energy": 15.0,
+          "vectorize": [
+            15.0,
+            1.0,
+            3.872983346207417,
+            0.9709418174260521
+          ]
+        }
+      ]
+    },
+    {
+      "word": "The quick brown fox jumps over the lazy dog",
+      "word_sym_energy": 383.57937359787496,
+      "word_vector": [
+        473.0,
+        72.0,
+        102.5585905362783,
+        23.458080847556985
+      ],
+      "letters": [
+        {
+          "char": "T",
+          "symmetry_class": "idempotent",
+          "sym_energy": 20.0,
+          "vectorize": [
+            20.0,
+            1.0,
+            4.47213595499958,
+            0.6631226582407952
+          ]
+        },
+        {
+          "char": "h",
+          "symmetry_class": "idempotent",
+          "sym_energy": 8.0,
+          "vectorize": [
+            8.0,
+            1.0,
+            2.8284271247461903,
+            0.8229838658936564
+          ]
+        },
+        {
+          "char": "e",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9589242746631385,
+          "vectorize": [
+            5.0,
+            2.0,
+            0.979246789457662,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "q",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 18.0,
+          "vectorize": [
+            17.0,
+            4.0,
+            4.242640687119285,
+            0.8854560256532099
+          ]
+        },
+        {
+          "char": "u",
+          "symmetry_class": "idempotent",
+          "sym_energy": 21.0,
+          "vectorize": [
+            21.0,
+            1.0,
+            4.58257569495584,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "i",
+          "symmetry_class": "idempotent",
+          "sym_energy": 9.0,
+          "vectorize": [
+            9.0,
+            1.0,
+            3.0,
+            0.8854560256532099
+          ]
+        },
+        {
+          "char": "c",
+          "symmetry_class": "biphasic",
+          "sym_energy": 0.1411200080598672,
+          "vectorize": [
+            3.0,
+            2.0,
+            0.3756594309475901,
+            0.3546048870425356
+          ]
+        },
+        {
+          "char": "k",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9999902065507035,
+          "vectorize": [
+            11.0,
+            2.0,
+            0.9999951032633627,
+            0.970941817426052
+          ]
+        },
+        {
+          "char": "b",
+          "symmetry_class": "biphasic",
+          "sym_energy": 0.9092974268256817,
+          "vectorize": [
+            2.0,
+            2.0,
+            0.9535708819095106,
+            0.23931566428755774
+          ]
+        },
+        {
+          "char": "r",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 19.0,
+          "vectorize": [
+            18.0,
+            4.0,
+            4.358898943540674,
+            0.8229838658936565
+          ]
+        },
+        {
+          "char": "o",
+          "symmetry_class": "idempotent",
+          "sym_energy": 15.0,
+          "vectorize": [
+            15.0,
+            1.0,
+            3.872983346207417,
+            0.9709418174260521
+          ]
+        },
+        {
+          "char": "w",
+          "symmetry_class": "idempotent",
+          "sym_energy": 23.0,
+          "vectorize": [
+            23.0,
+            1.0,
+            4.795831523312719,
+            0.35460488704253584
+          ]
+        },
+        {
+          "char": "n",
+          "symmetry_class": "involutive",
+          "sym_energy": 0.07142857142857142,
+          "vectorize": [
+            14.0,
+            3.0,
+            0.2672612419124244,
+            0.992708874098054
+          ]
+        },
+        {
+          "char": "f",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 7.0,
+          "vectorize": [
+            6.0,
+            4.0,
+            2.6457513110645907,
+            0.6631226582407952
+          ]
+        },
+        {
+          "char": "o",
+          "symmetry_class": "idempotent",
+          "sym_energy": 15.0,
+          "vectorize": [
+            15.0,
+            1.0,
+            3.872983346207417,
+            0.9709418174260521
+          ]
+        },
+        {
+          "char": "x",
+          "symmetry_class": "idempotent",
+          "sym_energy": 24.0,
+          "vectorize": [
+            24.0,
+            1.0,
+            4.898979485566356,
+            0.23931566428755768
+          ]
+        },
+        {
+          "char": "j",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 11.0,
+          "vectorize": [
+            10.0,
+            4.0,
+            3.3166247903554,
+            0.9350162426854148
+          ]
+        },
+        {
+          "char": "u",
+          "symmetry_class": "idempotent",
+          "sym_energy": 21.0,
+          "vectorize": [
+            21.0,
+            1.0,
+            4.58257569495584,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "m",
+          "symmetry_class": "idempotent",
+          "sym_energy": 13.0,
+          "vectorize": [
+            13.0,
+            1.0,
+            3.605551275463989,
+            1.0
+          ]
+        },
+        {
+          "char": "p",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 17.0,
+          "vectorize": [
+            16.0,
+            4.0,
+            4.123105625617661,
+            0.9350162426854148
+          ]
+        },
+        {
+          "char": "s",
+          "symmetry_class": "involutive",
+          "sym_energy": 0.05263157894736842,
+          "vectorize": [
+            19.0,
+            3.0,
+            0.22941573387056177,
+            0.7485107481711013
+          ]
+        },
+        {
+          "char": "o",
+          "symmetry_class": "idempotent",
+          "sym_energy": 15.0,
+          "vectorize": [
+            15.0,
+            1.0,
+            3.872983346207417,
+            0.9709418174260521
+          ]
+        },
+        {
+          "char": "v",
+          "symmetry_class": "idempotent",
+          "sym_energy": 22.0,
+          "vectorize": [
+            22.0,
+            1.0,
+            4.69041575982343,
+            0.46472317204376906
+          ]
+        },
+        {
+          "char": "e",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9589242746631385,
+          "vectorize": [
+            5.0,
+            2.0,
+            0.979246789457662,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "r",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 19.0,
+          "vectorize": [
+            18.0,
+            4.0,
+            4.358898943540674,
+            0.8229838658936565
+          ]
+        },
+        {
+          "char": "t",
+          "symmetry_class": "idempotent",
+          "sym_energy": 20.0,
+          "vectorize": [
+            20.0,
+            1.0,
+            4.47213595499958,
+            0.6631226582407952
+          ]
+        },
+        {
+          "char": "h",
+          "symmetry_class": "idempotent",
+          "sym_energy": 8.0,
+          "vectorize": [
+            8.0,
+            1.0,
+            2.8284271247461903,
+            0.8229838658936564
+          ]
+        },
+        {
+          "char": "e",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.9589242746631385,
+          "vectorize": [
+            5.0,
+            2.0,
+            0.979246789457662,
+            0.5680647467311558
+          ]
+        },
+        {
+          "char": "l",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 13.0,
+          "vectorize": [
+            12.0,
+            4.0,
+            3.605551275463989,
+            0.992708874098054
+          ]
+        },
+        {
+          "char": "a",
+          "symmetry_class": "idempotent",
+          "sym_energy": 1.0,
+          "vectorize": [
+            1.0,
+            1.0,
+            1.0,
+            0.12053668025532305
+          ]
+        },
+        {
+          "char": "z",
+          "symmetry_class": "involutive",
+          "sym_energy": 0.038461538461538464,
+          "vectorize": [
+            26.0,
+            3.0,
+            0.19611613513818404,
+            -3.216245299353273e-16
+          ]
+        },
+        {
+          "char": "y",
+          "symmetry_class": "idempotent",
+          "sym_energy": 25.0,
+          "vectorize": [
+            25.0,
+            1.0,
+            5.0,
+            0.12053668025532308
+          ]
+        },
+        {
+          "char": "d",
+          "symmetry_class": "biphasic",
+          "sym_energy": -0.7568024953079282,
+          "vectorize": [
+            4.0,
+            2.0,
+            0.8699439610158394,
+            0.4647231720437685
+          ]
+        },
+        {
+          "char": "o",
+          "symmetry_class": "idempotent",
+          "sym_energy": 15.0,
+          "vectorize": [
+            15.0,
+            1.0,
+            3.872983346207417,
+            0.9709418174260521
+          ]
+        },
+        {
+          "char": "g",
+          "symmetry_class": "asymmetric",
+          "sym_energy": 8.0,
+          "vectorize": [
+            7.0,
+            4.0,
+            2.8284271247461903,
+            0.7485107481711011
+          ]
+        }
+      ]
+    }
+  ]
+}
