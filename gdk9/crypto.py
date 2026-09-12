@@ -115,7 +115,10 @@ def decrypt_secure(ciphertext: str, key: str) -> str:
     from cryptography.fernet import Fernet
   except Exception as exc:  # pragma: no cover - optional dependency
     raise InputError("Secure mode requires 'cryptography' package. Install it to use --mode secure.") from exc
-  raw = base64.urlsafe_b64decode(ciphertext.encode('ascii'))
+  try:
+    raw = base64.urlsafe_b64decode(ciphertext.encode('ascii'))
+  except Exception as exc:
+    raise InputError("Invalid secure ciphertext") from exc
   if not raw.startswith(b'G9F') or len(raw) < 19:
     raise InputError("Invalid secure ciphertext")
   salt = raw[3:19]
