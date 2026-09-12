@@ -21,6 +21,7 @@ docs/
 ├── API.md                 ← Public Python API for library embedding
 ├── SECURITY.md            ← Threat model, crypto guidance, secret handling
 ├── RELEASE.md             ← sdist/wheel build path and TestPyPI steps
+├── PROVE.md               ← CI-on-main prove gate for research changes
 ├── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
 ├── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
 └── KEYSUITE_BRIDGE.md     ← KeySuite conformance ↔ gdk9.kernel inventory
@@ -43,6 +44,8 @@ docs/
 | Pin DCG letter-class / energy / vector  | [DCG_CONTRACT.md](DCG_CONTRACT.md) |
 | Review security considerations          | [SECURITY.md](SECURITY.md)     |
 | Build sdist/wheel or upload to TestPyPI  | [RELEASE.md](RELEASE.md)       |
+| Prove a change (CI on main)               | [PROVE.md](PROVE.md)           |
+| Kernel search walkthrough                 | [HANDBOOK.md](HANDBOOK.md) §8  |
 
 ---
 
