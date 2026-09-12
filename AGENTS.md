@@ -1,42 +1,37 @@
-# Repository Guidelines
+# Repository Guidelines (GDk9)
 
-## Project Structure & Module Organization
-- `src/` application code organized by feature; keep files focused and cohesive.
-- `tests/` mirrors `src/` paths for unit/integration tests (e.g., `tests/auth/test_login.*`).
-- `scripts/` utility and CI helpers; keep scripts idempotent and documented.
-- `docs/` project docs; `assets/` static files; `config/` environment templates (see `.env.example`).
-- Prefer feature-first modules (e.g., `src/auth/`, `src/payments/`) over giant utility buckets.
+## Project structure
+- `gdk9/` — Python package (CLI entry `gdk9.cli:main`, kernel, DCG, crypto, plugins, state).
+- `tests/` — pytest suite (mirrors package concerns; not a `src/` tree).
+- `docs/` — handbook, cheatsheet, SECURITY, PROVE, architecture notes.
+- `examples/` — runnable scripts `01_*.py` … `09_*.py`.
+- `scripts/` — small utilities (`export_json.py`, `profile_compare.py`, …).
+- `plugins/` — distributable JSON/YAML plugin packs.
+- No `src/`, no npm app, no auth service fiction.
 
-## Build, Test, and Development Commands
-- `make setup` install dependencies for local dev (delegates to package manager).
-- `make build` produce release artifacts/bundles.
-- `make run` start the local app/entrypoint.
-- `make test` run the full test suite with coverage.
-- `make lint` static analysis; `make fmt` auto-format code.
-If no Makefile, use the nearest equivalents (Node: `npm ci && npm run build|test|lint`; Python: `pip install -r requirements.txt && pytest -q`).
+## Build, test, lint
+```bash
+pip install -e ".[dev,secure]"   # or: make setup then pip install -e ".[dev]"
+make test                        # python -m pytest -q
+make lint                        # ruff + pyflakes
+make fmt                         # black
+make build                       # sdist + wheel
+```
+Prove gate details: `docs/PROVE.md` (critical ruff select + pytest; green CI on `main`).
 
-## Coding Style & Naming Conventions
-- Indentation: 2 spaces; max line length: 100; no trailing whitespace.
-- Naming: classes `PascalCase`; functions/vars `camelCase` (or `snake_case` in Python); files by language norms (e.g., Python `snake_case.py`, JS/TS `kebab-case.ts`).
-- Keep modules single-responsibility; avoid cross-feature imports except via public interfaces.
-- Use the provided formatters/linters via `make fmt` and `make lint`; do not commit unrelated reformatting.
+## Coding style
+- Python 3.9+; package code under `gdk9/`.
+- Prefer snake_case modules/functions; keep diffs minimal; do not mass-reformat.
+- Ruff line length 100 (`pyproject.toml`).
 
-## Testing Guidelines
-- Place tests under `tests/`, mirroring `src/` structure.
-- Naming: Python `test_*.py`; JS/TS `*.spec.(js|ts)`.
-- Aim for ≥85% coverage; new/changed code must include tests.
-- Run locally with `make test` (or `pytest -q` / `npm test`).
+## Commits & PRs
+- Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`.
+- Small atomic commits; PRs describe why, list touched paths, keep CI green.
 
-## Commit & Pull Request Guidelines
-- Use Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, optional scopes (e.g., `feat(auth): ...`).
-- Commits are small and atomic; body explains the why, not just the what.
-- PRs include: clear description, linked issues, tests, and screenshots for UI changes. Ensure CI green and `make lint`/`make fmt` are clean.
+## Security
+- Never commit secrets. Secure crypto mode is Fernet + PBKDF2-HMAC-SHA256 (200k) — see `docs/SECURITY.md` / `gdk9/crypto.py`.
+- Load plugins only from trusted paths (`docs/PLUGINS.md`).
 
-## Security & Configuration
-- Never commit secrets; keep `.env` local and provide `.env.example` for defaults.
-- Sanitize logs and test data; avoid PII in fixtures.
-
-## Agent-Specific Instructions
-- This file’s scope is the repository root and all subdirectories.
-- Prefer minimal diffs; match existing patterns; do not reformat unrelated files.
-- Use fast search (`rg`) and read files in ≤250-line chunks when inspecting.
+## Agent notes
+- Prefer `rg` and small diffs. Do not invent maths or touch kernel/DCG/energy core unless the task requires it.
+- Prove locally before claiming done: `ruff check gdk9 --select E9,F63,F7,F82` and `python -m pytest -q`.
