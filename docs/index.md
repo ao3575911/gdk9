@@ -20,8 +20,10 @@ docs/
 ├── CONFIGURATION.md       ← Principle files, state, env vars, auto-boot
 ├── API.md                 ← Public Python API for library embedding
 ├── SECURITY.md            ← Threat model, crypto guidance, secret handling
+├── RELEASE.md             ← sdist/wheel build path and TestPyPI steps
 ├── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
-└── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
+├── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
+└── KEYSUITE_BRIDGE.md     ← KeySuite conformance ↔ gdk9.kernel inventory
 ```
 
 ---
@@ -40,6 +42,7 @@ docs/
 | Contribute or extend the codebase       | [DEVELOPER_GUIDELINES.md](DEVELOPER_GUIDELINES.md) |
 | Pin DCG letter-class / energy / vector  | [DCG_CONTRACT.md](DCG_CONTRACT.md) |
 | Review security considerations          | [SECURITY.md](SECURITY.md)     |
+| Build sdist/wheel or upload to TestPyPI  | [RELEASE.md](RELEASE.md)       |
 
 ---
 

@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [Unreleased]
+
+### Package
+- Add `[project.optional-dependencies].build` (`build`) and include `build` in the
+  `dev` extra so `pip install '.[build]'` / `'.[dev]'` yields a reproducible sdist/wheel path.
+- Harden `make build` to ensure the `build` package is present, then run
+  `python -m build` and list `dist/` artifacts.
+- Add `docs/RELEASE.md` with exact local build, `twine check`, and optional TestPyPI
+  upload/install commands (no auto-publish workflow required).
+
+---
+
 ## [0.3.0] — 2026-05-15
 
 ### License

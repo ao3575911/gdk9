@@ -3,16 +3,21 @@
 PY ?= python3
 
 help:
-	@echo "Targets: setup build run test lint fmt"
+	@echo "Targets: setup build run test lint fmt package"
+	@echo "  build   — sdist + wheel via python -m build (installs build if needed)"
 
 setup:
 	@$(PY) -V
-	@echo "Installing dev tools (ruff, pyflakes, black)..."
+	@echo "Installing dev tools (ruff, pyflakes, black, build)..."
 	@$(PY) -m pip install -q --upgrade pip || true
-	@$(PY) -m pip install -q ruff pyflakes black || true
+	@$(PY) -m pip install -q ruff pyflakes black build || true
 
 build:
-	$(PY) -m build || echo "Install 'build' to package (pip install build)"
+	@echo "Ensuring build backend is available..."
+	@$(PY) -c "import build" 2>/dev/null || $(PY) -m pip install -q 'build>=1.0'
+	$(PY) -m build
+	@echo "Artifacts in dist/:"
+	@ls -1 dist/*.tar.gz dist/*.whl 2>/dev/null || ls -1 dist/
 
 run:
 	$(PY) -m gdk9.cli --help
