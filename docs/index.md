@@ -22,6 +22,7 @@ docs/
 ├── SECURITY.md            ← Threat model, crypto guidance, secret handling
 ├── RELEASE.md             ← sdist/wheel build path and TestPyPI steps
 ├── PROVE.md               ← CI-on-main prove gate for research changes
+├── EXPERIMENT_CONSERVE_SEARCH.md ← Conserved search vs naive join (research move 3)
 ├── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
 ├── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
 └── KEYSUITE_BRIDGE.md     ← KeySuite conformance ↔ gdk9.kernel inventory
@@ -45,6 +46,7 @@ docs/
 | Review security considerations          | [SECURITY.md](SECURITY.md)     |
 | Build sdist/wheel or upload to TestPyPI  | [RELEASE.md](RELEASE.md)       |
 | Prove a change (CI on main)               | [PROVE.md](PROVE.md)           |
+| Conserved search vs naive join experiment | [EXPERIMENT_CONSERVE_SEARCH.md](EXPERIMENT_CONSERVE_SEARCH.md) |
 | Kernel search walkthrough                 | [HANDBOOK.md](HANDBOOK.md) §8  |
 
 ---
@@ -105,7 +107,7 @@ plugins/                   ← Distributable plugin packs (YAML/JSON)
 └── ninefold_extended.json ← Extended Ninefold Grid with Unicode symbols
 
 tests/                     ← pytest suite
-examples/                  ← Runnable example scripts (01_analyze.py … 09_kernel_search_walkthrough.py; includes 08_kernel.py)
+examples/                  ← Runnable example scripts (01_analyze.py … 10_conserve_vs_naive.py; includes 08_kernel.py, 09_kernel_search_walkthrough.py)
 pairs.csv                  ← Character pair table (visual, DC/AC, energy, symbol)
 ```
 
