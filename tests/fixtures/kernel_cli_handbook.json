@@ -1,0 +1,197 @@
+{
+  "contract": "gdk9 kernel CLI handbook golden fixtures (KERNEL / HANDBOOK §8)",
+  "source": "python -m gdk9.cli kernel … against default principle",
+  "regenerate": [
+    "python -m gdk9.cli kernel eval ABC",
+    "python -m gdk9.cli kernel apply fuse A B",
+    "python -m gdk9.cli kernel search A B --target AB --max-depth 2 --rules fuse"
+  ],
+  "cases": [
+    {
+      "id": "eval_ABC",
+      "argv": [
+        "kernel",
+        "eval",
+        "ABC"
+      ],
+      "output": {
+        "ok": true,
+        "cmd": "eval",
+        "expression": {
+          "names": [
+            "A",
+            "B",
+            "C"
+          ],
+          "text": "ABC",
+          "total_energy": 6.0,
+          "symbols": [
+            {
+              "name": "A",
+              "energy": 1.0
+            },
+            {
+              "name": "B",
+              "energy": 2.0
+            },
+            {
+              "name": "C",
+              "energy": 3.0
+            }
+          ]
+        },
+        "total": 6.0,
+        "digital_root": 6,
+        "principle": "Gdk9 Official"
+      }
+    },
+    {
+      "id": "apply_fuse_A_B",
+      "argv": [
+        "kernel",
+        "apply",
+        "fuse",
+        "A",
+        "B"
+      ],
+      "output": {
+        "ok": true,
+        "cmd": "apply",
+        "judgment": {
+          "rule": "fuse",
+          "before": {
+            "names": [
+              "A",
+              "B"
+            ],
+            "text": "AB",
+            "total_energy": 3.0,
+            "symbols": [
+              {
+                "name": "A",
+                "energy": 1.0
+              },
+              {
+                "name": "B",
+                "energy": 2.0
+              }
+            ]
+          },
+          "after": {
+            "names": [
+              "AB"
+            ],
+            "text": "AB",
+            "total_energy": 3.0,
+            "symbols": [
+              {
+                "name": "AB",
+                "energy": 3.0
+              }
+            ]
+          },
+          "conserved": true,
+          "delta": 0.0
+        },
+        "principle": "Gdk9 Official"
+      }
+    },
+    {
+      "id": "search_A_B_to_AB",
+      "argv": [
+        "kernel",
+        "search",
+        "A",
+        "B",
+        "--target",
+        "AB",
+        "--max-depth",
+        "2",
+        "--rules",
+        "fuse"
+      ],
+      "output": {
+        "ok": true,
+        "cmd": "search",
+        "found": true,
+        "max_depth": 2,
+        "source": {
+          "names": [
+            "A",
+            "B"
+          ],
+          "text": "AB",
+          "total_energy": 3.0,
+          "symbols": [
+            {
+              "name": "A",
+              "energy": 1.0
+            },
+            {
+              "name": "B",
+              "energy": 2.0
+            }
+          ]
+        },
+        "target": {
+          "names": [
+            "AB"
+          ],
+          "text": "AB",
+          "total_energy": 3.0,
+          "symbols": [
+            {
+              "name": "AB",
+              "energy": 3.0
+            }
+          ]
+        },
+        "rules": [
+          "fuse"
+        ],
+        "steps": [
+          {
+            "index": 0,
+            "judgment": {
+              "rule": "fuse",
+              "before": {
+                "names": [
+                  "A",
+                  "B"
+                ],
+                "text": "AB",
+                "total_energy": 3.0,
+                "symbols": [
+                  {
+                    "name": "A",
+                    "energy": 1.0
+                  },
+                  {
+                    "name": "B",
+                    "energy": 2.0
+                  }
+                ]
+              },
+              "after": {
+                "names": [
+                  "AB"
+                ],
+                "text": "AB",
+                "total_energy": 3.0,
+                "symbols": [
+                  {
+                    "name": "AB",
+                    "energy": 3.0
+                  }
+                ]
+              },
+              "conserved": true,
+              "delta": 0.0
+            }
+          }
+        ],
+        "principle": "Gdk9 Official"
+      }
+    }
+  ]
+}
