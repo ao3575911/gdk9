@@ -22,7 +22,7 @@ docs/
 ├── SECURITY.md            ← Threat model, crypto guidance, secret handling
 ├── RELEASE.md             ← sdist/wheel build path and TestPyPI steps
 ├── PROVE.md               ← CI-on-main prove gate for research changes
-├── EXPERIMENT_CONSERVE_SEARCH.md ← Conserved search vs naive join (research move 3)
+├── EXPERIMENT_CONSERVE_SEARCH.md ← Conserved search vs naive join/split (research move 4)
 ├── DEVELOPER_GUIDELINES.md← Contribution standards and extension rules
 ├── DCG_CONTRACT.md        ← DCG/SymPhi letter-class / energy / 4D vector golden contract
 └── KEYSUITE_BRIDGE.md     ← KeySuite conformance ↔ gdk9.kernel inventory
