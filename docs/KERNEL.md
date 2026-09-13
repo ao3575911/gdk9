@@ -53,4 +53,23 @@ Deliberate miss (research honesty):
 python examples/09_kernel_search_walkthrough.py
 ```
 
+## Handbook CLI doctest gate
+
+The three smoke commands above (`eval ABC`, `apply fuse A B`, `search A B → AB`)
+are pinned as CI fixtures so handbook / KERNEL examples cannot drift from live
+CLI JSON.
+
+- Fixture: `tests/fixtures/kernel_cli_handbook.json`
+- Gate: `tests/test_kernel_cli_handbook.py` (subprocess `python -m gdk9.cli …`)
+- Regenerate fixtures (must match *current correct* live behaviour):
+
+```bash
+python -m gdk9.cli kernel eval ABC
+python -m gdk9.cli kernel apply fuse A B
+python -m gdk9.cli kernel search A B --target AB --max-depth 2 --rules fuse
+```
+
+If handbook text disagrees with live CLI, fix the handbook to match live (truth),
+then re-pin the fixture. See also `docs/PROVE.md`.
+
 CI on `main` is the prove gate for changes to this surface — see `docs/PROVE.md`.

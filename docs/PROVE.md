@@ -26,4 +26,5 @@ python -m pytest -q
 - Prefer the smallest experiment that could **fail**.
 - Do not claim SOTA, new energy laws, or KeySuite equivalence without a prove path above.
 - Kernel demos (`gdk9 kernel …`) are research smoke — delightful, energy-conserving, and CI-backed — not marketing.
+- Handbook kernel CLI examples (`gdk9 kernel eval|apply|search`) are CI-gated via `tests/test_kernel_cli_handbook.py` / `tests/fixtures/kernel_cli_handbook.json` (regenerate notes in `docs/KERNEL.md`).
 - Conserved-search vs naive join experiment: [`docs/EXPERIMENT_CONSERVE_SEARCH.md`](EXPERIMENT_CONSERVE_SEARCH.md) (pytest: `tests/experiment/test_conserve_vs_naive.py`).
