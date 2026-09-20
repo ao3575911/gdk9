@@ -30,3 +30,25 @@ jobs:
 
       - name: Pytest
         run: python -m pytest -q
+
+  # Optional egglog bridge (docs/SPIKE-egglog.md). egglog requires Python ≥3.11.
+  # Default matrix above stays green without the egglog extra (marked tests skip).
+  egglog:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package with egglog extra
+        run: pip install -e ".[dev,egglog]"
+
+      - name: Pytest (egglog-marked)
+        run: python -m pytest -q -m egglog
