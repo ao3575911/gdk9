@@ -217,3 +217,71 @@ def test_naive_accepts_energy_mismatched_split_kernel_rejects():
   assert kernel_path is None, (
     "kernel must reject energy-mismatched A,B split target (validity beat, not speed)"
   )
+
+def test_kernel_fuse_split_fuse_chain_conserves():
+  """Move 5: A,B —fuse→ AB —split→ A,B —fuse→ AB; every step conserved.
+
+  Uses ``apply`` for the multi-step chain because ``infer`` tracks seen *names*
+  and cannot revisit A,B after leaving it (so fuse→split→fuse is not an infer path).
+  """
+  principle = KernelPrinciple.default()
+  ea = principle.energy_of("A")
+  eb = principle.energy_of("B")
+  source = Expression.from_names(["A", "B"], principle)
+  engine = ImplicationEngine(
+    principle,
+    (fusion_rule(), split_rule(("A", "B"), (ea, eb))),
+  )
+
+  fuse1 = engine.apply("fuse", source)
+  assert fuse1.conserved is True
+  assert abs(fuse1.delta) <= TOL
+  assert fuse1.after.names() == ("AB",)
+
+  split1 = engine.apply("split", fuse1.after)
+  assert split1.conserved is True
+  assert abs(split1.delta) <= TOL
+  assert split1.after.names() == ("A", "B")
+  assert [s.energy for s in split1.after] == [ea, eb]
+  assert abs(split1.after.total_energy() - source.total_energy()) <= TOL
+
+  fuse2 = engine.apply("fuse", split1.after)
+  assert fuse2.conserved is True
+  assert abs(fuse2.delta) <= TOL
+  assert fuse2.after.names() == ("AB",)
+  assert abs(fuse2.after.total_energy() - source.total_energy()) <= TOL
+
+
+def test_naive_accepts_same_names_wrong_energy_kernel_rejects():
+  """Move 5 new beat: same name sequence, wrong declared energy.
+
+  Naive join treats identity (start == goal) as found (empty path).
+  ``infer`` also returns [] when names match; ``conserved_kernel_proof`` must
+  still reject via the final-energy gate. Drop that gate and this test fails
+  (non-theatre for move 5).
+  """
+  principle = KernelPrinciple.default()
+  ea = principle.energy_of("A")
+  eb = principle.energy_of("B")
+  source = Expression.from_names(["A", "B"], principle)
+  mismatched = Expression(
+    (Symbol("A", MISMATCHED_A_ENERGY), Symbol("B", MISMATCHED_B_ENERGY))
+  )
+  assert source.names() == mismatched.names()
+  assert abs(source.total_energy() - mismatched.total_energy()) > TOL
+
+  naive = naive_join_search(source.names(), mismatched.names(), max_depth=2)
+  assert naive is not None, "naive join must treat same names as found (identity)"
+
+  engine = ImplicationEngine(
+    principle,
+    (fusion_rule(), split_rule(("A", "B"), (ea, eb))),
+  )
+  name_only = engine.infer(source, mismatched, max_depth=2)
+  assert name_only == [], "setup: infer returns [] when names already match"
+
+  kernel_path = conserved_kernel_proof(engine, source, mismatched, max_depth=2)
+  assert kernel_path is None, (
+    "kernel must reject same-names target with wrong declared energy"
+  )
+
