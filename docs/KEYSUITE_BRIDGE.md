@@ -1,10 +1,10 @@
 # KeySuite Conformance Bridge (Phase A Inventory)
 
 **Spec:** gdk9 Spec 7 — KeySuite conformance bridge  
-**Phase:** A (docs-only inventory)  
+**Phase:** A inventory + B spike (one compose adapter test)  
 **Home repo:** [`ao3575911/gdk9`](https://github.com/ao3575911/gdk9)  
 **Sibling literature (read-only):** [`ao3575911/gdk9_keysuite`](https://github.com/ao3575911/gdk9_keysuite)  
-**Status:** inventory only — no adapter code, no KeySuite mutations
+**Status:** Phase A inventory retained; Phase B spike adds one outside-kernel compose adapter test. KeySuite still untouched.
 
 This note maps KeySuite's published GDk9 v1.0.0 conformance vectors onto what
 `gdk9.kernel` actually exposes today. Claims below cite file paths in both
@@ -181,14 +181,56 @@ Related but **non-kernel** gdk9 surfaces (also not KeySuite vector runners):
 ## Suggested next steps (not done in this PR)
 
 1. Keep this inventory as the Spec 7 Phase A record (**Approach A** — preferred).
-2. If Approach B is chosen later: add an adapter module *outside* the kernel
-   boundary that consumes JSONL tokens, drives an FSM matching
-   `grammar/gdk9-v1.0.0.yaml`, and only then calls kernel primitives where
-   applicable (e.g. energy of content symbols) — with tests against the
-   sibling vectors **read-only**.
+2. Phase B spike (done): one compose adapter outside the kernel — see
+   **Phase B spike** below. Full FSM JSONL runner still deferred.
 3. Approach C: defer any bridge work; retain this doc as the decision record.
 
 ---
+
+
+
+---
+
+## Phase B spike (compose.basic.001)
+
+**Date:** 2026-09-20  
+**card_id:** `gdk9-keysuite-phase-b-spike`
+
+### What was tried
+
+- Vendored **one** KeySuite row read-only:
+  `tests/keysuite/fixtures/compose.basic.001.json`
+  (`id=compose.basic.001`, tokens `A B SPACE` → `AB`), sourced from
+  `gdk9_keysuite/conformance/vectors/gdk9-v1.0.0.jsonl`. KeySuite repo not edited.
+- Added outside-kernel adapter `gdk9/keysuite_bridge/compose.py`:
+  strip COMMIT tokens → `Expression.from_names` → callers assert `text()` /
+  conserved `fusion_rule`.
+- Tests: `tests/keysuite/test_compose_basic_001.py`.
+
+### Result
+
+| Check | Outcome |
+| --- | --- |
+| Content names `("A","B")` → `Expression.text() == "AB"` | **pass** |
+| `fusion_rule` → name `AB`, energy conserved | **pass** |
+| KeySuite COMMIT / IDLE / COMPOSE FSM | **not implemented** (documented gap; Phase A `partial`) |
+| implication-bind / mode / abort / escape / rollback | **out of scope** (Phase A `no`) |
+
+No `pytest.xfail` — the partial-fit claims that *can* be stated honestly against
+the kernel pass. The FSM gap remains explicit in this section and the matrix
+above (compose stays **partial**, not **yes**).
+
+### Gap citation
+
+Compose is still **partial** in the support matrix: kernel can represent
+concatenated names and fuse energies, but has no token stream or commit FSM.
+This spike proves the name/energy slice only. Full JSONL runner / Approach B FSM
+remains deferred.
+
+### Non-goals held
+
+No Redis/WS, no KeySuite mutations, no kernel semantics change, no full vector
+suite runner.
 
 ## Provenance
 

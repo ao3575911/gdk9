@@ -1,0 +1,16 @@
+{
+  "id": "compose.basic.001",
+  "tokens": [
+    "A",
+    "B",
+    "SPACE"
+  ],
+  "output": "AB",
+  "outputs": [
+    "AB"
+  ],
+  "final_state": "IDLE",
+  "exit_code": 0,
+  "_vendored_from": "ao3575911/gdk9_keysuite conformance/vectors/gdk9-v1.0.0.jsonl",
+  "_note": "Read-only vendor of one KeySuite row for Phase B spike; KeySuite untouched."
+}
