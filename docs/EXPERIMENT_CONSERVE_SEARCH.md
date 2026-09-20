@@ -1,6 +1,6 @@
 # Experiment: Conserved search vs naive name-join
 
-**Status:** research move 4 (Approach A — split + energy mismatch)  
+**Status:** research move 5 (Approach A — fuse→split→fuse chain + same-names mismatch)  
 **Claim (bounded):** GDk9’s implication kernel **beats naive join/split on proof validity under conservation** — not speed, not SOTA, not a new energy law.
 
 ## Public / baseline system
@@ -45,6 +45,8 @@ On tasks where a conserved fuse/split path exists, the kernel finds it within a 
 3. Naive baseline accepts at least one documented energy-mismatched fuse target as “found” while the kernel correctly returns no valid conserved proof (`None`).
 4. **Move 4:** Kernel cannot find `AB → A,B` with `split_rule` within `max_depth=2` (matching part energies), or fuse→split round-trip fails conservation.
 5. **Move 4 (new beat):** Naive split accepts documented energy-mismatched `A,B` (energies 50+50) while the kernel conserved-proof helper returns `None`.
+6. **Move 5:** Fuse→split→fuse apply chain breaks conservation or fails to restore `AB` energy.
+7. **Move 5 (new beat):** Naive join treats same-names wrong-energy target as found while `conserved_kernel_proof` returns `None`.
 
 ## Method
 
@@ -54,6 +56,8 @@ On tasks where a conserved fuse/split path exists, the kernel finds it within a 
 4. Repeat with a documented mismatched target `Symbol("AB", 99.0)`: naive must report found; kernel conserved-proof helper must return `None`.
 5. **Move 4:** Register `split_rule(("A","B"), (eA,eB))` on conserved `AB`; assert kernel finds `A,B` and fuse→split round-trips.
 6. **Move 4:** Mismatched split target `Symbol("A",50), Symbol("B",50)`: naive split finds by names; `infer` also reaches names, but conserved-proof helper returns `None` (final-energy gate).
+7. **Move 5:** Apply fuse→split→fuse on conserved `A,B`; assert each judgment conserved and final `AB` energy matches source.
+8. **Move 5:** Same names `A,B` with energies 50+50: naive join finds (identity); `infer` returns `[]`; conserved-proof helper returns `None`.
 
 Executable specification: `tests/experiment/test_conserve_vs_naive.py` (pytest **is** the experiment). Optional runner: `examples/10_conserve_vs_naive.py`.
 
@@ -83,6 +87,34 @@ python examples/10_conserve_vs_naive.py
 ```
 
 Critical lint (unchanged prove gate): `ruff check gdk9 --select E9,F63,F7,F82`.
+
+## Move 5 — fuse→split→fuse chain + same-names energy mismatch
+
+**What was added**
+
+- Multi-step **apply** chain `A,B → AB → A,B → AB` via `fusion_rule` + `split_rule`, asserting `conserved` and energy restore on every step.
+- **New naive-vs-kernel beat:** same name sequence `A,B` with wrong declared energies `(50, 50)` — naive join treats identity as found; kernel rejects.
+- Why apply (not infer) for the chain: `ImplicationEngine.infer` tracks seen *names* and will not revisit `A,B` after fusing away, so fuse→split→fuse is not a recoverable infer path. The chain is still a live kernel conservation proof.
+
+**Fail criteria (move 5)**
+
+- Pytest fails if any step of fuse→split→fuse breaks conservation or final `AB` energy disagrees with the source.
+- Pytest fails if `conserved_kernel_proof` accepts a same-names target whose declared energy disagrees with the source.
+- Non-theatre proof: `engine.infer` returns `[]` when names already match. The final-energy check in `conserved_kernel_proof` is load-bearing — drop it and `test_naive_accepts_same_names_wrong_energy_kernel_rejects` fails.
+
+**How to run**
+
+```bash
+pip install -e ".[dev]"
+python -m pytest -q tests/experiment/test_conserve_vs_naive.py
+# or full suite:
+python -m pytest -q
+# optional JSON summary:
+python examples/10_conserve_vs_naive.py
+```
+
+Critical lint (unchanged prove gate): `ruff check gdk9 --select E9,F63,F7,F82`.
+
 
 ## How to run
 
