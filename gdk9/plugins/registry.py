@@ -8,7 +8,7 @@ This is a minimal in-memory registry intended as a stepping stone toward a
 dynamic plugin loader.
 """
 
-from typing import Any, Callable, Dict, Iterable, Optional
+from typing import Any, Callable, Dict, Iterable
 
 
 class PluginRegistry:

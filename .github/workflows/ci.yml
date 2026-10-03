@@ -6,49 +6,72 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  test:
+  python:
+    name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
-        extras: ["dev", "dev,secure"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install package
-        run: pip install -e ".[${{ matrix.extras }}]"
+      - name: Install gdk9-cli
+        run: pip install -e ".[dev,secure]"
 
-      - name: Ruff (critical)
-        run: ruff check gdk9 --select E9,F63,F7,F82
+      - name: Ruff
+        run: ruff check .
 
-      - name: Pytest
+      - name: Pytest (gdk9)
         run: python -m pytest -q
 
-  # Optional egglog bridge (docs/SPIKE-egglog.md). egglog requires Python ≥3.11.
-  # Default matrix above stays green without the egglog extra (marked tests skip).
+      # KeySuite runtime requires Python >= 3.10.
+      - name: Install KeySuite runtime
+        if: matrix.python-version != '3.9'
+        working-directory: packages/keysuite-runtime
+        run: pip install -r requirements.txt && pip install -e .
+
+      - name: Pytest (KeySuite runtime)
+        if: matrix.python-version != '3.9'
+        working-directory: packages/keysuite-runtime
+        run: python -m pytest -q
+
+      - name: Conformance vectors
+        if: matrix.python-version != '3.9'
+        working-directory: packages/keysuite-runtime
+        run: keysuite conformance conformance/vectors
+
+  # Optional egglog bridge (docs/SPIKE-egglog.md); egglog requires Python >= 3.11.
   egglog:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.12"
+      - run: pip install -e ".[dev,egglog]"
+      - run: python -m pytest -q -m egglog
 
-      - name: Install package with egglog extra
-        run: pip install -e ".[dev,egglog]"
-
-      - name: Pytest (egglog-marked)
-        run: python -m pytest -q -m egglog
+  console:
+    name: KeySuite console (Node 22)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/keysuite-console
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/keysuite-console/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck

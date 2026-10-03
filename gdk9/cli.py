@@ -12,10 +12,10 @@ from .io_utils import read_input
 from .principles import Principle, load_principle
 from .utilization import attune, sigil
 from .tokenize import summarize_tokens_table, to_json_payload, annotate_text, delimiter_set
-from .optimize import optimize_attunement, apply_plan, Plan, optimize_substitution, EditPlan, apply_edit_plan
+from .optimize import optimize_attunement, apply_plan, Plan, optimize_substitution, apply_edit_plan
 from .log import logger
 from .ansi import supports_color, colorize
-from .fmt import Box, section, kv, fmt_dr, fmt_float_e, fmt_class, fmt_valid, fmt_form, energy_bar, vlen
+from .fmt import Box, section, kv, fmt_dr, fmt_float_e, fmt_class, fmt_valid, energy_bar, vlen
 from .state import load_state, save_state, list_symbols, set_symbol, merge_state, set_rule
 from .imply import make_fusion, make_split, apply_rule, Rule
 from .kernel_cli import run_kernel
@@ -272,7 +272,6 @@ def cmd_synthesize(args: argparse.Namespace, principle: Principle, use_color: bo
         elif ch == "0":
           coloured += colorize("0", "dim", True)
         elif ch == "#":
-          dr_v = int(line[0]) if line and line[0].isdigit() else 9
           coloured += colorize(ch, "bright_white", True)
         else:
           coloured += colorize(ch, "dim", True) if ch in ":-" else ch
@@ -312,7 +311,6 @@ def cmd_principles(args: argparse.Namespace, current: Principle) -> int:
   if args.action == "install":
     if not args.file:
       raise InputError("--file is required for install")
-    import shutil
     from pathlib import Path
     try:
       # Validate first
@@ -494,7 +492,7 @@ def build_parser() -> argparse.ArgumentParser:
   sym_add = sym_sub.add_parser("add", help="Add or update a symbol")
   sym_add.add_argument("name")
   sym_add.add_argument("energy", type=float)
-  sym_list = sym_sub.add_parser("list", aliases=["ls"], help="List symbols")
+  sym_sub.add_parser("list", aliases=["ls"], help="List symbols")
 
   imp = sub.add_parser("imply", aliases=["im"], help="Define and apply rules")
   imp_sub = imp.add_subparsers(dest="imply_cmd", required=True)
@@ -507,7 +505,7 @@ def build_parser() -> argparse.ArgumentParser:
   imp_ds.add_argument("out_a")
   imp_ds.add_argument("out_b")
   imp_ds.add_argument("ratio", type=float)
-  imp_list = imp_sub.add_parser("list", aliases=["ls"], help="List rules")
+  imp_sub.add_parser("list", aliases=["ls"], help="List rules")
   imp_ap = imp_sub.add_parser("apply", aliases=["ap"], help="Apply rule to input symbol names")
   imp_ap.add_argument("rule")
   imp_ap.add_argument("inputs", nargs="+")
@@ -539,12 +537,12 @@ def build_parser() -> argparse.ArgumentParser:
   ker_se.add_argument("--parts", help="Comma-separated split output names when using split")
   ker_se.add_argument("--energies", help="Comma-separated split output energies when using split")
 
-  repl = sub.add_parser("repl", aliases=["sh"], help="Interactive REPL for symbols and imply")
+  sub.add_parser("repl", aliases=["sh"], help="Interactive REPL for symbols and imply")
 
   # plugin management
   pl = sub.add_parser("plugin", aliases=["pl"], help="Manage and load plugins (rule packs/grammars)")
   pl_sub = pl.add_subparsers(dest="plugin_cmd", required=True)
-  pl_list = pl_sub.add_parser("list", help="List discovered plugins in search paths")
+  pl_sub.add_parser("list", help="List discovered plugins in search paths")
   pl_val = pl_sub.add_parser("validate", help="Validate a plugin pack (YAML/JSON/Python)")
   pl_val.add_argument("name_or_path")
   pl_info = pl_sub.add_parser("info", help="Show plugin metadata")
@@ -560,7 +558,7 @@ def build_parser() -> argparse.ArgumentParser:
   # rich help
   hp = sub.add_parser("help", aliases=["h"], help="Show help or subcommand help (e.g. 'gdk9 help plugin')")
   hp.add_argument("topic", nargs="?", help="Optional topic or subcommand name")
-  hb = sub.add_parser("handbook", aliases=["hb"], help="Print comprehensive handbook (EN + RU)")
+  sub.add_parser("handbook", aliases=["hb"], help="Print comprehensive handbook (EN + RU)")
 
   # reset/clear
   rst = sub.add_parser("reset", aliases=["clear"], help="Reset state/config to defaults for a fresh start")
@@ -686,7 +684,6 @@ def main(argv: list[str] | None = None) -> int:
           sc  = r["class"]
           e   = r["energy"]
           vec = r["vector"]
-          form = "DC" if ch.isupper() else "ac"
           form_s = colorize("DC", "bold", use_color) if ch.isupper() \
                    else colorize("ac", "dim", use_color)
           t.row([colorize(ch, "bold", use_color),

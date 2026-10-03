@@ -3,7 +3,7 @@ import tempfile
 import unittest
 
 from gdk9.state import load_state, save_state, set_symbol
-from gdk9.imply import make_fusion, make_split, apply_rule, Rule
+from gdk9.imply import make_fusion, make_split, apply_rule
 
 
 class TestRules(unittest.TestCase):

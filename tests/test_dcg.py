@@ -2,7 +2,6 @@ import math
 import unittest
 
 from gdk9.dcg import (
-    DCG,
     _CLASS_LOWER,
     _CLASS_UPPER,
     get_dcg,

@@ -4,7 +4,7 @@ import json
 from typing import Dict, List
 
 from .principles import Principle
-from .energy import char_energy, digital_root
+from .energy import char_energy
 
 
 ALL_LETTERS = [chr(c) for c in range(ord('A'), ord('Z') + 1)] + [chr(c) for c in range(ord('a'), ord('z') + 1)]

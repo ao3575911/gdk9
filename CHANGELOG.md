@@ -7,6 +7,32 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+---
+
+## [0.4.0] — 2026-10-03
+
+### Monorepo
+- Merged six GDk9 repositories into this repo with full git history:
+  - `gdk9_keysuite` → `packages/keysuite-runtime/` (MIT)
+  - `keysuite` → `apps/keysuite-console/` (MIT)
+  - `gdk9-1` → `legacy/gdk9-fork/` (GPL-3.0; tracked `.pyc` files removed)
+  - `gdk9-alphabet` → `legacy/gdk9-alphabet/` (MIT)
+  - `SymPhi-Engine` → `legacy/symphi-engine/` (GPL-3.0)
+  - `keysuite-gist` → `docs/keysuite-gist.md`
+- Subfolders keep their original `LICENSE` files; the top level stays AGPL-3.0-or-later.
+
+### CI & tooling
+- CI now runs gdk9 pytest + ruff (Python 3.9–3.13), KeySuite runtime pytest and
+  conformance vectors (Python 3.10+), and the KeySuite console tests and typecheck (Node 22).
+- Ruff scoped to `E9` + pyflakes (`F`); `legacy/` and `apps/` excluded. Fixed unused
+  imports and variables in `gdk9/`, `scripts/`, `examples/` and `tests/`.
+- pytest scoped to `tests/`; wheel packaging restricted to the `gdk9` package.
+- Added `apps/keysuite-console/package-lock.json` for reproducible `npm ci`.
+
+### Docs
+- Rewrote README (install, quickstart, layout, tests, licenses); the alphabet handbook
+  moved to `docs/ALPHABET.md`.
+
 ### License
 - Align root `LICENSE` file to **AGPL-3.0-or-later** (was GPL-3 text; matches pyproject/CLI/docs).
 

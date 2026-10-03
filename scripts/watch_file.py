@@ -12,7 +12,6 @@ Press Ctrl-C to stop.
 from __future__ import annotations
 
 import argparse
-import os
 import sys
 import time
 from datetime import datetime
@@ -65,7 +64,6 @@ def main(argv=None) -> int:
 
     prev_mtime = None
     prev_total = None
-    prev_dr = None
 
     print(f"Watching: {path}  (Ctrl-C to stop)")
     print(f"{'Time':12}  {'Total':>8}  {'DR':>4}  {'Delta':>7}  {'Status'}")
@@ -110,7 +108,6 @@ def main(argv=None) -> int:
 
                 prev_mtime = mtime
                 prev_total = total
-                prev_dr = dr
 
             time.sleep(args.interval)
 

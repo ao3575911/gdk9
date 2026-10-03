@@ -246,7 +246,6 @@ def optimize_substitution(
   # DP over residues with minimal edits, tracking choices
   # state: residue -> (count, prev_residue, (pos, r, repl))
   best: Dict[int, Tuple[int, int, Tuple[int, int, Optional[str]]]] = {0: (0, -1, (-1, 0, None))}
-  frontier = [0]
   for i in range(n):
     new_best = best.copy()
     for res, (cnt, prev, info) in best.items():

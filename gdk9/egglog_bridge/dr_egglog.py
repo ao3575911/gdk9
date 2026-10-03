@@ -11,7 +11,7 @@ Saturation is two-phase so unbounded integer growth cannot explode the e-graph
 """
 from __future__ import annotations
 
-from typing import List, Sequence
+from typing import Sequence
 
 from egglog import (
     EGraph,

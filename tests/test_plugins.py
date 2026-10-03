@@ -1,11 +1,10 @@
 import json
-import os
 import tempfile
 import unittest
 from pathlib import Path
 
 from gdk9.cli import main
-from gdk9.plugins.loader import find_plugin, load_plugin, list_available
+from gdk9.plugins.loader import find_plugin, load_plugin
 from gdk9.state import load_state, save_state
 
 

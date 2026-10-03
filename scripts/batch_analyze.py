@@ -25,7 +25,7 @@ def _setup_path() -> None:
 _setup_path()
 
 from gdk9.principles import load_principle
-from gdk9.energy import string_energy, digital_root, harmonic_triads, analyze_text
+from gdk9.energy import string_energy, harmonic_triads, analyze_text
 
 
 EXTENSIONS = {".txt", ".md", ".rst", ".csv", ".log"}

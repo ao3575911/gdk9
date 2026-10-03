@@ -9,7 +9,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from gdk9.kernel import Expression, ImplicationEngine, KernelPrinciple
+from gdk9.kernel import Expression, ImplicationEngine
 from gdk9.kernel.engine import fusion_rule
 from gdk9.kernel.symbol import Symbol
 from gdk9.kernel_cli import expression_payload, judgment_payload, proof_steps_payload, principle_to_kernel

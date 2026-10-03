@@ -5,5 +5,7 @@ grammars and rule packs at runtime. See `registry.py` for the current
 experimental surface.
 """
 
-from .registry import PluginRegistry  # re-export for convenience
+from .registry import PluginRegistry
+
+__all__ = ["PluginRegistry"]
 

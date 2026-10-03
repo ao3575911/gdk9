@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
-from ..errors import ConfigError, InputError
+from ..errors import ConfigError
 from ..imply import make_fusion, make_split, Rule, apply_rule
 from ..state import set_rule, set_symbol
 from ..principles import Principle

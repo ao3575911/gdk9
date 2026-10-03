@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import re
 from dataclasses import dataclass, asdict
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 from .errors import InputError
 

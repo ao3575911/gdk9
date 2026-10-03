@@ -7,12 +7,12 @@ import sys, os
 # Allow running from the examples/ directory
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from gdk9.energy import string_energy, char_energy
+from gdk9.energy import string_energy
 from gdk9.dcg import (
     get_dcg, symmetry_class, sym_energy,
-    word_sym_energy, homotopy_equivalent,
+    homotopy_equivalent,
 )
-from gdk9.fmt import fmt_class, fmt_dr, fmt_float_e, Box, section, kv
+from gdk9.fmt import Box, section
 from gdk9.principles import Principle
 
 principle = Principle.default()
