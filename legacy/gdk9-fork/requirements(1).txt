@@ -1,0 +1,3 @@
+rich>=13.0
+click>=8.0
+# add your runtime dependencies here, pin versions if you need reproducible deploys

@@ -1,0 +1,16 @@
+{
+  "name": "Gdk9 Official (Example)",
+  "description": "Replace this file with your official mapping and rename to official.json to activate.",
+  "letter_mode": "a1z26",
+  "number_mode": "digital_root",
+  "normalize_zero_to_nine": true,
+  "weights": {"letter": 1, "digit": 1, "symbol": 1},
+  "harmonics": true,
+  "symbol_energy": {
+    ".": 1,
+    ",": 2,
+    "!": 3,
+    "?": 4
+  }
+}
+

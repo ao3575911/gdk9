@@ -1,0 +1,17 @@
+{
+  "symbols": {
+    "A": 2.0,
+    "B": 3.0,
+    "AB": 5.0
+  },
+  "rules": {
+    "FUSE": {
+      "name": "FUSE",
+      "type": "fusion",
+      "arity": 2,
+      "params": {
+        "out": "AUTO"
+      }
+    }
+  }
+}

@@ -1,0 +1,160 @@
+# GDk9 Engine — Command Cheat Sheet
+
+## Typer CLI (`python -m gdk9.cli` or installed entrypoint)
+
+### `init`
+
+Create config, profile, logs, cache. Safe to re-run with `--force`. Writes JSON config and profile files under `~/.gdk9` by default. Returns code 2 if already initialized and no `--force`. 
+**Usage**
+
+```
+gdk9 init [--profile NAME] [--force] [--json] [-q|--quiet] [-v|-vv] [--color/--no-color] [--home PATH]
+```
+
+### `vectorize`
+
+Tokenize text, map symbols to suites, emit per-symbol binary and decimal vector. JSON mode prints machine-readable output. 
+**Usage**
+
+```
+gdk9 vectorize [--text TEXT | --file FILE] [--pattern REGEX] [--casefold] [--json]
+```
+
+**Output**
+
+* `vector`: list of decimals
+* Table preview of index, symbol, suite, binary, decimal (first 200 rows) 
+
+### `value`
+
+Compute “energy” with optional per-suite weights. Also returns counts and energy per suite. 
+**Usage**
+
+```
+gdk9 value [--text TEXT | --file FILE] [--weight SUITE=WEIGHT ...] [--pattern REGEX] [--casefold] [--json]
+```
+
+**Notes**
+
+* Multiple `--weight` allowed. Format `SUITE=WEIGHT`. 
+
+### `analyze`
+
+Full pipeline: parse → map → relations → metrics → energy → formatted output. JSON mode returns `{ ok, result }`. 
+**Usage**
+
+```
+gdk9 analyze [--text TEXT | --file FILE] [--pattern REGEX] [--casefold] [--json]
+```
+
+**Printed panels**
+
+* Summary: symbol count, relation count, energy, unknown symbols.
+* Suite breakdown.
+* Advanced metrics: entropy, edge rates, oscillation, bit flip rate, diversity, transitions, form, complexity, compression, energy density, suggestions. 
+
+**Common input rules**
+
+* Provide exactly one: `--text`, `--file`, or pipe stdin. Missing input raises a parameter error. 
+
+---
+
+## Pipeline CLI (`python -m gdk9_pipeline`)
+
+Argparse version with file loaders and exporters. Same core stages. 
+**Usage**
+
+```
+python -m gdk9_pipeline \
+  [-i TEXT | -f FILE | --json-file FILE | --csv-file FILE | --stix-file FILE] \
+  [--symbol-suites SUITES.json] \
+  [--suite-weight SUITE=WEIGHT ...] \
+  [--token-pattern REGEX] [--casefold] \
+  [--json] [--print-context] \
+  [--export-relations PATH] [--export-suites PATH] \
+  [--export-format {csv,json,jsonl}] \
+  [--export-metadata key=value ...] \
+  [--json-field NAME ...] [--csv-column NAME ...] [--csv-delimiter CH] [--csv-dialect DIALECT] \
+  [--stix-type TYPE ...] [--stix-field NAME ...]
+```
+
+**Inputs**
+
+* Inline `-i/--input`, text file `-f/--file`, JSON loader `--json-file` (+ `--json-field`), CSV loader `--csv-file` (+ `--csv-column`, delimiter/dialect), STIX loader `--stix-file` (+ `--stix-type`, `--stix-field`). Tokenization honors `--token-pattern` and `--casefold`. 
+
+**Suites and weights**
+
+* `--symbol-suites` to load custom suites JSON.
+* `--suite-weight SUITE=WEIGHT` repeatable. 
+
+**Output and exports**
+
+* `--json` prints formatted JSON result.
+* `--print-context` prints collected counters.
+* `--export-relations` and `--export-suites` write notebook-friendly tables. Format inferred by extension or set with `--export-format`. Attach `--export-metadata k=v`. 
+
+**Exit codes**
+
+* `0` on success, `1` on read/build/run/export errors. 
+
+---
+
+## Symbol system essentials
+
+* Built-in suites cover `0–9`, `A–Z`, `a–z`. Each has `suite`, 8-bit `binary`, `category` and `subcategory` (e.g., `digit_even`, `upper_vowel`). Unknown symbols default to `suite="unknown"`, `binary=None`. 
+* Parser can emit single characters by default or regex-extracted tokens with `--pattern`. `--casefold` lower-cases for case-insensitive analysis. 
+* Metrics include entropy, edges, runs, oscillation, bit flips via Hamming on equal-length binaries, n-grams per category, diversity, Markov transition entropies, form switches, digit runs, compression proxy, and a composite complexity score with heuristic suggestions. 
+
+---
+
+## Quick examples
+
+### Typer CLI
+
+```
+# Init workspace
+gdk9 init --profile default
+
+# Vectorize a file
+gdk9 vectorize --file notes.txt --pattern "\w+" --casefold
+
+# Compute value with custom weights
+gdk9 value --text "AbC123" --weight suite_A=2 --weight suite_1=0.5
+
+# Full analysis with JSON
+gdk9 analyze --file corpus.txt --pattern "\w+" --json
+```
+
+
+
+### Pipeline CLI
+
+```
+# Analyze CSV column and export relations as JSONL
+python -m gdk9_pipeline --csv-file data.csv --csv-column message \
+  --token-pattern "\w+" --casefold \
+  --export-relations rel.jsonl --export-format jsonl --json
+
+# Use external suites and weights
+python -m gdk9_pipeline -i "GDK9 123" \
+  --symbol-suites suites.json \
+  --suite-weight suite_G=2 --suite-weight suite_1=0.1 --json
+
+# Print context diagnostics
+python -m gdk9_pipeline -f input.txt --print-context
+```
+
+
+
+---
+
+## Imports for library use
+
+```
+from gdk9 import SymbolParser, SymbolMapper, RelationEngine, EnergyAllocator, OutputModule, MetricsEngine, SYMBOL_SUITES
+```
+
+Re-exports provided for direct use. 
+
+If you want this as a one-page PDF or man-page style doc, say “export cheat sheet” and specify format.
+

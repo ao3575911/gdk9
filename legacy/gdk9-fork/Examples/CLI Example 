@@ -1,0 +1,6 @@
+python gdk9_pipeline.py
+
+Input: GDK9 is awesome! 123
+Output: {'symbol_count': 16, 'relation_count': 15, 'energy': 16, 'relations': ['G->D', 'D->K', 'K->9', '9->i', 'i->s', 's->a', 'a->w', 'w->e', 'e->s', 's->o', 'o->m', 'm->e', 'e->1', '1->2', '2->3']}
+Context metrics: {'parsed_count': 16, 'mapped_count': 16, 'relation_count': 15, 'energy_sum': 16}
+

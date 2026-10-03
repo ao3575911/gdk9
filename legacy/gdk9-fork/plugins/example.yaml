@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "0.1",
+  "description": "Example plugin: adds a split and fusion rule, and a new symbol energy for '~'",
+  "symbol_energy": {"~": 9},
+  "symbols": {"X": 10.0},
+  "rules": [
+    {"type": "split", "name": "HALVE", "out_a": "L", "out_b": "R", "ratio": 0.5},
+    {"type": "fusion", "name": "JOIN", "out": "AUTO", "arity": 2}
+  ],
+  "checks": [
+    {"rule": "HALVE", "inputs": [{"name": "X", "energy": 10.0}]}
+  ]
+}
+

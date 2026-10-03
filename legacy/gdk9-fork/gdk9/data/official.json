@@ -1,0 +1,132 @@
+{
+  "name": "Gdk9 Official",
+  "description": "Official GDk9 Implication Engine Mapping embedded alongside CLI principle fields.",
+  "letter_mode": "a1z26",
+  "number_mode": "digital_root",
+  "normalize_zero_to_nine": true,
+  "weights": {"letter": 1, "digit": 1, "symbol": 1},
+  "harmonics": true,
+  "symbol_energy": {
+    ".": 1,
+    ",": 2,
+    "!": 3,
+    "?": 4,
+    ":": 5,
+    ";": 6,
+    "-": 7,
+    "_": 8,
+    "*": 9,
+    "#": 5,
+    "+": 4,
+    "=": 6,
+    "@": 8,
+    "$": 7,
+    "%": 5,
+    "&": 9,
+    "/": 3,
+    "\\": 3,
+    "(": 2,
+    ")": 2,
+    "[": 2,
+    "]": 2,
+    "{": 2,
+    "}": 2,
+    "<": 1,
+    ">": 1,
+    "|": 1,
+    "~": 9,
+    "^": 8
+  },
+  "gdk9_mapping": {
+    "version": "0.1.0",
+    "spec": "GDk9 Implication Engine Mapping",
+    "updated_utc": "2025-10-22T00:00:00Z",
+    "units": {
+      "energy": "E",
+      "epsilon": 1e-9
+    },
+    "naming": {
+      "symbol_regex": "^[A-Z][A-Za-z0-9_]*$",
+      "rule_regex": "^[a-z][a-z0-9_]*$",
+      "reserved_symbols": ["E0", "NULL", "ONE"]
+    },
+    "layers": [
+      {"id": "L1", "name": "Physics↔Computation", "concepts": ["rest_energy", "landauer", "bit_energy_boundary"]},
+      {"id": "L2", "name": "Language↔Logic", "concepts": ["implication", "parse_tree", "normal_form"]},
+      {"id": "L3", "name": "Identity↔Access", "concepts": ["key_invariant", "signature", "policy_rule"]},
+      {"id": "L4", "name": "Games↔Economics", "concepts": ["token_energy", "score", "exchange_rule"]}
+    ],
+    "symbol": {
+      "fields": ["name", "energy"],
+      "constraints": {
+        "name": "must match naming.symbol_regex",
+        "energy": "float, finite"
+      },
+      "examples": [
+        {"name": "A", "energy": 2.0},
+        {"name": "B", "energy": 3.5}
+      ]
+    },
+    "conservation": {
+      "law": "sum(inputs.energy) == sum(outputs.energy)",
+      "tolerance": 1e-9,
+      "on_violation": "error:ConservationError"
+    },
+    "rules": {
+      "types": ["fusion", "split", "custom"],
+      "templates": {
+        "fusion": {
+          "arity": "n>=2",
+          "energy": "sum(inputs)",
+          "output": {"name": "concat(inputs.names)", "energy": "sum(inputs.energy)"}
+        },
+        "split": {
+          "arity": 1,
+          "params": {"ratio": "0..1"},
+          "outputs": [
+            {"name": "OUT_A", "energy": "E_in * ratio"},
+            {"name": "OUT_B", "energy": "E_in * (1-ratio)"}
+          ]
+        },
+        "custom": {
+          "arity": "n>=1",
+          "energy": "must conserve",
+          "definition": "user function(inputs)->outputs"
+        }
+      },
+      "id_hash": "sha256(name|arity|template|params)"
+    },
+    "cli_map": {
+      "symbol_add": "gdk9 symbol add <NAME> <ENERGY>",
+      "symbol_list": "gdk9 symbol list",
+      "rule_define_fusion": "gdk9 imply define-fusion <RULE> <OUT_NAME> <ARITY>",
+      "rule_define_split": "gdk9 imply define-split <RULE> <OUT_A> <OUT_B> <RATIO>",
+      "rule_list": "gdk9 imply list",
+      "rule_apply": "gdk9 imply apply <RULE> <INPUTS...>",
+      "repl": "gdk9 repl"
+    },
+    "storage": {
+      "path": "~/.gdk9/state.json",
+      "format": {
+        "symbols": {"<NAME>": "<ENERGY:float>"},
+        "rules": ["<RULE_NAME>"]
+      }
+    },
+    "telemetry": {
+      "log_fields": ["ts", "cmd", "inputs", "outputs", "ok"],
+      "privacy": "local-only in this build"
+    },
+    "examples": {
+      "fusion": {
+        "inputs": [{"name":"A","energy":2.0},{"name":"B","energy":3.0}],
+        "outputs": [{"name":"AB","energy":5.0}]
+      },
+      "split": {
+        "inputs": [{"name":"AB","energy":5.0}],
+        "params": {"ratio": 0.4},
+        "outputs": [{"name":"A","energy":2.0},{"name":"B","energy":3.0}]
+      }
+    }
+  }
+}
+

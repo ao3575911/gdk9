@@ -1,0 +1,10 @@
+{
+  "name": "triad_fusions",
+  "version": "0.1",
+  "description": "Fusion rules for composing three inputs and a small symbol energy tweak.",
+  "symbol_energy": {"^": 8},
+  "rules": [
+    {"type": "fusion", "name": "TRIAD", "out": "AUTO", "arity": 3}
+  ]
+}
+

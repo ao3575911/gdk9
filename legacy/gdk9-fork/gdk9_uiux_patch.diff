@@ -1,0 +1,162 @@
+*** Begin Patch
+*** Update File: gdk9/io_utils.py
+@@ def read_input(text: Optional[str], file: Optional[str]) -> str:
+-  data = sys.stdin.read()
+-  if not data:
+-    raise InputError("No input provided. Pass text, --file, or pipe stdin.")
+-  return data
++  data = sys.stdin.read()
++  if not data:
++    # Provide more descriptive error guidance when no input is available
++    raise InputError(
++      "No input provided. You must supply text as a positional argument, specify --file to read from a file, or pipe data via stdin."
++    )
++  return data
+
+*** End Patch
+
+*** Begin Patch
+*** Update File: gdk9/cli.py
+@@
+-from .tokenize import summarize_tokens_table, to_json_payload, annotate_text, delimiter_set
++from .tokenize import summarize_tokens_table, to_json_payload, annotate_text, delimiter_set, render_table
+@@ def build_parser() -> argparse.ArgumentParser:
+-  att.add_argument("--subs-file", "-S", help="JSON file mapping chars to replacement arrays for substitution/edit")
++  # Use -B instead of -S for substitution file to avoid clashing with global --state/-S option.
++  att.add_argument("--subs-file", "-B", help="JSON file mapping chars to replacement arrays for substitution/edit")
+@@ def build_parser() -> argparse.ArgumentParser:
+   tok.add_argument(
+     "-F", "--format",
+     choices=["table", "json", "annotate"],
+     default="table",
+     help="Output format",
+   )
++  # Optionally write output to a file instead of printing to stdout.
++  tok.add_argument("--out-file", help="Write output to file instead of stdout")
+
+*** End Patch
+
+*** Begin Patch
+*** Update File: gdk9/cli.py
+@@ def main(argv: list[str] | None = None) -> int:
+-    if args.cmd == "tokenize":
+-      text = read_input(args.text, args.file)
+-      keep = bool(getattr(args, "keep_delims", False)) or (not bool(getattr(args, "drop_delims", False)))
+-      strip_tokens = not bool(args.no_strip)
+-      if args.format == "json":
+-        print(
+-          to_json_payload(
+-            text,
+-            principle,
+-            energy=args.energy,
+-            delims=args.delims,
+-            keep_delims=keep,
+-            strip_tokens=strip_tokens,
+-          )
+-        )
+-        return 0
+-      if args.format == "annotate":
+-        print(
+-          annotate_text(
+-            text,
+-            principle,
+-            energy=args.energy,
+-            delims=args.delims,
+-            keep_delims=keep,
+-            strip_tokens=strip_tokens,
+-          )
+-        )
+-        return 0
+-      # table
+-      if not getattr(args, "summary_only", False):
+-        rows = summarize_tokens_table(
+-          text,
+-          principle,
+-          energy=args.energy,
+-          delims=args.delims,
+-          keep_delims=keep,
+-          strip_tokens=strip_tokens,
+-          use_color=(getattr(args, "color", False)) or (supports_color() and not getattr(args, "no_color", False)),
+-        )
+-        print_table(rows, use_color)
+-      # footer with metrics and delimiter set unless suppressed
+-      if not getattr(args, "no_footer", False):
+-        dset = args.delims if args.delims is not None else delimiter_set(principle, energy=args.energy)
+-        from .tokenize import tokens_with_energy, summarize_metrics_lines
+-        toks = tokens_with_energy(
+-          text,
+-          principle,
+-          energy=args.energy,
+-          delims=args.delims,
+-          keep_delims=keep,
+-          strip_tokens=strip_tokens,
+-        )
+-        for line in summarize_metrics_lines(text, toks, principle, dset, use_color):
+-          print(line)
+-      return 0
++    if args.cmd == "tokenize":
++      # Parse input text and determine delimiter handling flags.
++      text = read_input(args.text, args.file)
++      keep = bool(getattr(args, "keep_delims", False)) or not bool(getattr(args, "drop_delims", False))
++      strip_tokens = not bool(args.no_strip)
++      # Choose colour scheme for table/metrics
++      use_color_tok = (getattr(args, "color", False)) or (supports_color() and not getattr(args, "no_color", False))
++      # Build output string instead of printing directly, to support --out-file.
++      if args.format == "json":
++        output = to_json_payload(
++          text,
++          principle,
++          energy=args.energy,
++          delims=args.delims,
++          keep_delims=keep,
++          strip_tokens=strip_tokens,
++        )
++      elif args.format == "annotate":
++        output = annotate_text(
++          text,
++          principle,
++          energy=args.energy,
++          delims=args.delims,
++          keep_delims=keep,
++          strip_tokens=strip_tokens,
++        )
++      else:
++        # Format as table; accumulate rows and footer lines.
++        lines: list[str] = []
++        if not getattr(args, "summary_only", False):
++          rows = summarize_tokens_table(
++            text,
++            principle,
++            energy=args.energy,
++            delims=args.delims,
++            keep_delims=keep,
++            strip_tokens=strip_tokens,
++            use_color=use_color_tok,
++          )
++          # Render table to a string for UX friendly output.
++          lines.append(render_table(rows, use_color_tok))
++        if not getattr(args, "no_footer", False):
++          dset = args.delims if args.delims is not None else delimiter_set(principle, energy=args.energy)
++          from .tokenize import tokens_with_energy, summarize_metrics_lines
++          toks = tokens_with_energy(
++            text,
++            principle,
++            energy=args.energy,
++            delims=args.delims,
++            keep_delims=keep,
++            strip_tokens=strip_tokens,
++          )
++          for line in summarize_metrics_lines(text, toks, principle, dset, use_color_tok):
++            lines.append(line)
++        output = "\n".join(lines)
++      # Write output to file if requested; otherwise print to stdout.
++      out_path = getattr(args, "out_file", None)
++      if out_path:
++        from pathlib import Path
++        Path(out_path).write_text(output, encoding="utf-8")
++        print(f"Wrote output to {out_path}")
++      else:
++        print(output)
++      return 0
+*** End Patch
+*** End Patch

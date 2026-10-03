@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gdk9-cli"
+version = "0.2.0"
+description = "Gdk9 CLI for symbolic energy analysis and utilization"
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["gdk9", "energy", "cli", "symbols"]
+authors = [{ name = "Gdk9 Contributors" }]
+license = { text = "Proprietary" }
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: Other/Proprietary License",
+  "Environment :: Console",
+  "Topic :: Text Processing",
+]
+
+[project.scripts]
+gdk9 = "gdk9.cli:main"
+
+[tool.setuptools]
+packages = { find = { where = ["."] } }
+
+[tool.setuptools.package-data]
+gdk9 = ["data/*.json"]

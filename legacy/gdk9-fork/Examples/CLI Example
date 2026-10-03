@@ -1,0 +1,9 @@
+gdk9 analyze "Signal 123 ehdxkcit 3245768"
+unit  value                energy  total
+document   Signal 123 ehdxkcit 3245768  7  106  
+paragraph  Signal 123 ehdxkcit 3245768  7  106  
+sentence   Signal 123 ehdxkcit 3245768  7  106  
+word       Signal                       8  26   
+word       123                          6  6    
+word       ehdxkcit                     3  39   
+word       3245768                      8  35  

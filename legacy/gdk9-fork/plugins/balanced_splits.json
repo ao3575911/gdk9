@@ -1,0 +1,14 @@
+{
+  "name": "balanced_splits",
+  "version": "0.1",
+  "description": "Common balanced split rules and a tri-join fusion.",
+  "rules": [
+    {"type": "split", "name": "BAL_HALF", "out_a": "LEFT", "out_b": "RIGHT", "ratio": 0.5},
+    {"type": "split", "name": "BAL_THIRD", "out_a": "LOW", "out_b": "HIGH", "ratio": 0.3333333333333333},
+    {"type": "fusion", "name": "TRI_JOIN", "out": "AUTO", "arity": 3}
+  ],
+  "checks": [
+    {"rule": "BAL_HALF", "inputs": [{"name": "X", "energy": 10.0}]}
+  ]
+}
+
