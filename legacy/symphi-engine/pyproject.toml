@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "symphi-engine"
+version = "0.1.0"
+description = "Physics-aware symbolic implication kernel for energy-conserving alphabet transformations"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Adam Grange", email = "ao3575911@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+full = ["sympy", "networkx", "matplotlib", "scikit-learn", "pandas"]
+dev  = ["pytest", "ruff"]
+
+[project.scripts]
+symphi = "main:main"
+
+[project.urls]
+Homepage   = "https://github.com/ao3575911/SymPhi-Engine"
+Repository = "https://github.com/ao3575911/SymPhi-Engine"
+Issues     = "https://github.com/ao3575911/SymPhi-Engine/issues"
