@@ -1,0 +1,8 @@
+
+idempotent: A, B, c, d, AB, ABC, ABD
+default_phase: A=0, B=0, c=0, d=0, AB=0, ABC=0, ABD=0
+A B -> AB priority=0
+AB c -> ABC priority=1
+AB d -> ABD priority=2
+ABC d -> ABD priority=3
+ABD c -> ABC priority=4

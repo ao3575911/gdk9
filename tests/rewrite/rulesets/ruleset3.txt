@@ -1,0 +1,14 @@
+
+idempotent: DOT, COMMA, SEMI, COLON, SP, NL, BEGIN, END
+default_phase: DOT=0, COMMA=0, SEMI=0, COLON=0, SP=0, NL=0, BEGIN=0, END=0
+DOT DOT -> DOT priority=0
+COMMA COMMA -> COMMA priority=0
+SEMI SEMI -> SEMI priority=0
+COLON COLON -> COLON priority=0
+SP SP -> SP priority=0
+SP COMMA -> COMMA priority=1
+COMMA SP -> COMMA priority=1
+SP DOT -> DOT priority=1
+DOT SP -> DOT priority=1
+BEGIN noun END -> noun priority=2
+BEGIN verb END -> verb priority=2

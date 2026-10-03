@@ -1,0 +1,13 @@
+
+idempotent: FIZZ, BUZZ, FOO, BAR, BAZ, LOOP, STOP
+default_phase: FIZZ=0, BUZZ=1, FOO=0, BAR=1, BAZ=0, LOOP=1, STOP=0
+FIZZ BUZZ -> FOO priority=0
+BUZZ FIZZ -> BAR priority=1
+FOO BAR -> BAZ priority=2
+BAR FOO -> LOOP priority=3
+BAZ LOOP -> STOP priority=4
+STOP STOP -> STOP priority=5
+FIZZ0 -> FIZZ1 priority=6
+FIZZ1 -> FIZZ0 priority=7
+BUZZ1 -> BUZZ0 priority=8
+BUZZ0 -> BUZZ1 priority=9
