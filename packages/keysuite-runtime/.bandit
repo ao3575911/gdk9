@@ -1,0 +1,5 @@
+exclude_dirs:
+  - .venv
+  - tests
+skips:
+  - B105
