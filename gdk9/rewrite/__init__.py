@@ -2,8 +2,8 @@
 Symbol Rewrite Reactor (SRR) public API.
 
 This package provides classes and functions for working with the symbol
-rewrite reactor.  Users can construct a :class:`~srr.symbol.SymbolRegistry`,
-parse rewrite rules, execute a :class:`~srr.runtime.Reactor` over an input
+rewrite reactor.  Users can construct a :class:`~gdk9.rewrite.symbol.SymbolRegistry`,
+parse rewrite rules, execute a :class:`~gdk9.rewrite.runtime.Reactor` over an input
 sequence and inspect the resulting symbol stream.  The module also
 exposes the package version for introspection.
 """

@@ -7,6 +7,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- `gdk9.rewrite`: the Symbol Rewrite Reactor, merged from `ao3575911/Symbol-Rewrite-Reactor` with its history. Run with `python -m gdk9.rewrite.cli`. Tests under `tests/rewrite/` run in CI with the rest of the suite.
+
 ---
 
 ## [0.4.0] — 2026-10-03

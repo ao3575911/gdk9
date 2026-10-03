@@ -36,6 +36,7 @@ gdk9 profile "The quick brown fox jumps over the lazy dog"
 gdk9 dcg classify FWEM
 gdk9 kernel eval "FWEM"
 python examples/01_analyze.py
+python -m gdk9.rewrite.cli run tests/rewrite/rulesets/ruleset1.txt "A B C"
 ```
 
 KeySuite runtime (Python 3.10+):
@@ -65,6 +66,7 @@ More: [Quickstart](docs/QUICKSTART.md) · [CLI reference](docs/CLI.md) ·
 | Path | What it is | Stack | License |
 | --- | --- | --- | --- |
 | `gdk9/`, `tests/`, `examples/`, `docs/` | `gdk9-cli` package: CLI, kernel, DCG, crypto, plugins | Python 3.9+ | AGPL-3.0-or-later |
+| `gdk9/rewrite/`, `tests/rewrite/` | Symbol Rewrite Reactor: rule-based symbol rewriting until canonical collapse or a cycle. See [`docs/REWRITE.md`](docs/REWRITE.md). Formerly `ao3575911/Symbol-Rewrite-Reactor` | Python 3.9+ | MIT |
 | `packages/keysuite-runtime/` | KeySuite reference runtime, REST/WebSocket API, conformance vectors | Python 3.10+ | MIT |
 | `apps/keysuite-console/` | KeySuite local web console | TypeScript, React, Vite | MIT |
 | `legacy/gdk9-fork/` | Snapshot of the AGI-H4X/gdk9 fork (unmaintained) | Python | GPL-3.0 |

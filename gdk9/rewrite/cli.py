@@ -24,7 +24,7 @@ def _parse_input_sequence(s: str) -> List[str]:
 
 def main() -> None:
     from . import __version__  # import here to avoid circular imports
-    parser = argparse.ArgumentParser(prog="srr")
+    parser = argparse.ArgumentParser(prog="python -m gdk9.rewrite.cli")
     parser.add_argument("--version", action="version", version=f"srr {__version__}")
     subparsers = parser.add_subparsers(dest="command")
 

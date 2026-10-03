@@ -1,7 +1,7 @@
 import pytest
-from srr.symbol import SymbolRegistry
-from srr.rules import parse_rules
-from srr.runtime import Reactor, run_reactor
+from gdk9.rewrite.symbol import SymbolRegistry
+from gdk9.rewrite.rules import parse_rules
+from gdk9.rewrite.runtime import Reactor
 
 def build_reactor(rule_text: str):
     registry = SymbolRegistry()

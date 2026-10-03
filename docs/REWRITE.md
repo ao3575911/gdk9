@@ -1,4 +1,6 @@
-# Symbol Rewrite Reactor
+# Symbol Rewrite Reactor (gdk9.rewrite)
+
+This was the `Symbol-Rewrite-Reactor` repo. It now ships inside `gdk9-cli` as the `gdk9.rewrite` module; install with `pip install -e ".[dev]"` from the gdk9 repo and run it with `python -m gdk9.rewrite.cli`. The original install notes below are kept for reference. The module is MIT licensed (`gdk9/rewrite/LICENSE`).
 
 Symbol Rewrite Reactor (SRR) is a symbolic execution engine built around **rewrite rules** and **idempotent collapse**.  It allows you to define simple transformation rules over strings of symbols and then iteratively apply those rules until a canonical form or cycle is reached.  SRR supports multi‑character symbols, per‑symbol phase annotations, rule priorities, idempotent declarations, default phase declarations and directional semantics.  You can use SRR as a lightweight research tool for exploring symbolic grammars, language evolution, compression or emergent behaviours.
 
@@ -10,7 +12,7 @@ Symbol Rewrite Reactor (SRR) is a symbolic execution engine built around **rewri
 - **Rewrite rules** of the form `pattern -> replacement` with optional `priority=` to control application order.
 - **Directional semantics**: patterns respect symbol order (`AB` and `BA` are distinct).
 - **Biphasic state management** via phase annotations on symbols and replacement sequences.
-- **CLI tool** to run rules on an input string: `python -m srr.cli run rules.txt "A B C"`.
+- **CLI tool** to run rules on an input string: `python -m gdk9.rewrite.cli run rules.txt "A B C"`.
 - **Extensible Python API** for integrating SRR into other applications.
 - **Test suite** driven by `pytest` and `hypothesis`.
 
@@ -91,7 +93,7 @@ Where `NAME` is any non‑empty sequence of non‑whitespace characters except d
 The CLI provides a `--debug` flag on the `run` subcommand.  When set, the reactor prints the final sequence as a list of `(symbol, phase)` pairs instead of concatenating the symbol names together.  This is useful for inspecting the internal phases of your symbols.  Example:
 
 ```bash
-python -m srr.cli run --debug rules.txt "A B C"
+python -m gdk9.rewrite.cli run --debug rules.txt "A B C"
 ```
 
 The `--version` flag prints the installed SRR version.  You can always run `--help` to see available options.
@@ -101,7 +103,7 @@ The `--version` flag prints the installed SRR version.  You can always run `--he
 For quick experimentation you can use the built‑in REPL.  Invoke the `repl` subcommand with a rule file:
 
 ```bash
-python -m srr.cli repl rules.txt
+python -m gdk9.rewrite.cli repl rules.txt
 ```
 
 This will load the rules and drop you into an interactive loop.  Type a sequence of symbols and press Enter to see the reactor's output.  Enter `quit` or `exit` to leave the REPL.
@@ -133,7 +135,7 @@ Z1 -> X0 priority=0
 Run the reactor from the command line:
 
 ```bash
-python -m srr.cli run rules.txt "X Y X Z"
+python -m gdk9.rewrite.cli run rules.txt "X Y X Z"
 ```
 
 The program will print the final canonical sequence after applying the rules until no further changes occur.
