@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-009",
+  "tokens": ["A", ".", "B", "DONE"],
+  "mode_start": null,
+  "receipt": "A→B",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "DONE commits implication output"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-012-session",
+  "tokens": ["A", "BACKSPACE", ".", "B", "SPACE"],
+  "mode_start": null,
+  "receipt": "→B",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "empty left via COMPOSE; IDLE+BIND is unspecified → ERROR"
+}

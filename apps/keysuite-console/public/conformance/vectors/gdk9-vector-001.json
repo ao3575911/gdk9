@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-001",
+  "tokens": ["C", "C", ".", "3", "3", "SPACE"],
+  "mode_start": null,
+  "receipt": "CC→33",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "basic implication"
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="KeySuite">
+  <rect width="32" height="32" rx="7" fill="#09090b"/>
+  <rect x="8" y="4.5" width="16" height="23" rx="1.5" fill="#ece8df"/>
+  <rect x="11" y="14.6" width="8" height="2.8" fill="#1c1916"/>
+  <polygon points="17.2,11.4 23.2,16 17.2,20.6" fill="#1c1916"/>
+</svg>

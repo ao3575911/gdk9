@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-016",
+  "tokens": ["A", "_", ".", "B"],
+  "mode_start": null,
+  "receipt": "A.B",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "escape then commit (auto-commit at finalize)"
+}

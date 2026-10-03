@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-005",
+  "tokens": ["X", ":", "A", "B", "SPACE"],
+  "mode_start": null,
+  "receipt": "X(AB)",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "mode-scoped reduction"
+}

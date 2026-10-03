@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-014",
+  "tokens": ["X", ":", "A", ".", "B"],
+  "mode_start": null,
+  "receipt": null,
+  "final_state": "ERROR",
+  "emits": false,
+  "notes": "v1.1 pin: MODE + BIND → ERROR"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-008",
+  "tokens": ["A", "B", "DONE"],
+  "mode_start": null,
+  "receipt": "AB",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "DONE is an explicit commit token"
+}

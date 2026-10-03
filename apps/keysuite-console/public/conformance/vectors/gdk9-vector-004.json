@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-004",
+  "tokens": ["A", "ESC"],
+  "mode_start": null,
+  "receipt": null,
+  "final_state": "IDLE",
+  "emits": false,
+  "notes": "abort clears volatile state"
+}

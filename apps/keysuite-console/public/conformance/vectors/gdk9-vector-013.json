@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-013",
+  "tokens": ["A", ".", "SPACE"],
+  "mode_start": null,
+  "receipt": "A→",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "empty right side"
+}

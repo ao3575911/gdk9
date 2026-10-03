@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-015",
+  "tokens": ["SPACE"],
+  "mode_start": null,
+  "receipt": null,
+  "final_state": "IDLE",
+  "emits": false,
+  "notes": "IDLE commit: no emit"
+}

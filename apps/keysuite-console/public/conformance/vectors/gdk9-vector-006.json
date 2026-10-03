@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-006",
+  "tokens": ["A", ".", "B", ".", "C", "SPACE"],
+  "mode_start": null,
+  "receipt": "A→B.C",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "first bind marker is the implication boundary"
+}

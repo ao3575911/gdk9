@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-003",
+  "tokens": ["A", "B", "BACKSPACE", "SPACE"],
+  "mode_start": null,
+  "receipt": "A",
+  "final_state": "IDLE",
+  "emits": true,
+  "notes": "rollback before commit"
+}

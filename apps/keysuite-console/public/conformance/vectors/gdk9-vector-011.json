@@ -1,0 +1,9 @@
+{
+  "id": "gdk9-vector-011",
+  "tokens": ["@"],
+  "mode_start": null,
+  "receipt": null,
+  "final_state": "ERROR",
+  "emits": false,
+  "notes": "undeclared @ → ERROR"
+}
